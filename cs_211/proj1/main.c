@@ -16,14 +16,14 @@
 
 #include "main.h"
 
-bool ResizeArray(int **array, int *capacity, int *size)
+bool resizeArray(int **array, int *capacity, int *size)
 {
   int *temp_array = (int *) malloc(2 * *capacity * sizeof(int));
   
-  if (!CloneArray(*array, temp_array, *size))
+  if (!cloneArray(*array, temp_array, *size))
     return false;
 
-  if (!CleanArray(*array))
+  if (!cleanArray(*array))
     return false;
 
   (*array) = temp_array;
@@ -33,7 +33,7 @@ bool ResizeArray(int **array, int *capacity, int *size)
   return true;
 }
 
-bool CleanArray(int *array)
+bool cleanArray(int *array)
 {
   if (array == NULL)
     return false;
@@ -42,7 +42,7 @@ bool CleanArray(int *array)
   return true;
 }
 
-void InsertIntegers(int **array, int *capacity, int *size)
+void insertIntegers(int **array, int *capacity, int *size)
 {
   int input = 0;
   int position = 0;
@@ -56,13 +56,13 @@ void InsertIntegers(int **array, int *capacity, int *size)
     (*size)++;
 
     if (position >= *capacity)
-      ResizeArray(array, capacity, size);
+      resizeArray(array, capacity, size);
 
     scanf("%d", &input);
   }
 }
 
-void SearchIntegers(int *unsorted_array, int *sorted_array, int size)
+void searchIntegers(int *unsorted_array, int *sorted_array, int size)
 {
   int input = 0;
 
@@ -72,15 +72,15 @@ void SearchIntegers(int *unsorted_array, int *sorted_array, int size)
   while (input != -999) {
     int linear_comparisons = 0;
     int binary_comparisons = 0;
-    const int linear_index = LinearSearch(unsorted_array, size, input, &linear_comparisons);
-    const int binary_index = BinarySearch(sorted_array, size, input, &binary_comparisons);
+    const int linear_index = linearSearch(unsorted_array, size, input, &linear_comparisons);
+    const int binary_index = binarySearch(sorted_array, size, input, &binary_comparisons);
 
     if (linear_index == -1 &&
         binary_index == -1) {
       printf("Integer %d was not found in the arrays\n", input);
     } else {
-      PrintResults("Linear search - Unsorted array", input, linear_index, linear_comparisons);
-      PrintResults("Binary search - Sorted array", input, binary_index, binary_comparisons);
+      printResults("Linear search - Unsorted array", input, linear_index, linear_comparisons);
+      printResults("Binary search - Sorted array", input, binary_index, binary_comparisons);
       printf("\n");
     }
 
@@ -88,12 +88,12 @@ void SearchIntegers(int *unsorted_array, int *sorted_array, int size)
   }
 }
 
-void PrintResults(const char *array, const int value, const int index, const int comparisons)
+void printResults(const char *array, const int value, const int index, const int comparisons)
 {
   printf("%s: found %d at position %d after %d comparisons.\n", array, value, index, comparisons);
 }
 
-bool CloneArray(int *source, int *destination, int size)
+bool cloneArray(int *source, int *destination, int size)
 {
   if (destination == NULL)
     return false;
@@ -105,14 +105,14 @@ bool CloneArray(int *source, int *destination, int size)
   return true;
 }
 
-void SwapInts(int* a, int* b)
+void swapInts(int* a, int* b)
 {
   int t = *a;
   *a = *b;
   *b = t;
 }
 
-int _SortArray (int *array, int start_index, int end_index)
+int _sortArray (int *array, int start_index, int end_index)
 {
   const int pivot = array[end_index];
   int i = start_index - 1;
@@ -123,26 +123,26 @@ int _SortArray (int *array, int start_index, int end_index)
     // equal to pivot
     if (array[j] <= pivot) {
       i++;    // increment index of smaller element
-      SwapInts( &(array[i]), &(array[j]) );
+      swapInts( &(array[i]), &(array[j]) );
     }
   }
-  SwapInts( &(array[i + 1]), &(array[end_index]) );
+  swapInts( &(array[i + 1]), &(array[end_index]) );
   return (i + 1);
 }
  
-void SortArray(int *array, int start_index, int end_index)
+void sortArray(int *array, int start_index, int end_index)
 {
   if (start_index < end_index) {
     // Partition the array and get the pivot point
-    int pi = _SortArray(array, start_index, end_index);
+    int pi = _sortArray(array, start_index, end_index);
 
     // Sort elements in both partitions
-    SortArray(array, start_index, pi - 1);
-    SortArray(array, pi + 1, end_index);
+    sortArray(array, start_index, pi - 1);
+    sortArray(array, pi + 1, end_index);
   }
 }
 
-int LinearSearch(int *array, int size, int target, int *comparisons)
+int linearSearch(int *array, int size, int target, int *comparisons)
 {
   int index;
   for (index = 0; index < size; index++) {
@@ -158,22 +158,20 @@ int LinearSearch(int *array, int size, int target, int *comparisons)
   return index;
 }
 
-int BinarySearch(int *array, int size, int target, int *comparisons)
+int binarySearch(int *array, int size, int target, int *comparisons)
 {
   int leftmost = 0;
   int rightmost = size - 1;
 
   while (leftmost <= rightmost) {
+    (*comparisons)++;
     int middle = leftmost + (rightmost - leftmost) / 2;
 
     if (array[middle] < target) {
       leftmost = middle + 1;
-      (*comparisons)++;
     } else if (array[middle] > target) {
       rightmost = middle - 1;
-      (*comparisons)++;
     } else {
-      (*comparisons)++;
       return middle;
     }
   }
@@ -181,7 +179,7 @@ int BinarySearch(int *array, int size, int target, int *comparisons)
   return -1;
 }
 
-void PrintArrayElements(int *array, int size)
+void printArrayElements(int *array, int size)
 {
   int index;
   for (index = 0; index < size; index++) {
@@ -197,26 +195,26 @@ int main()
 
   int *input_array = (int *) malloc(sizeof(int) * array_capacity);
 
-  InsertIntegers(&input_array, &array_capacity, &array_size);
+  insertIntegers(&input_array, &array_capacity, &array_size);
 
   printf("All integers were successfully inserted.\n");
 
   int *clone_array = (int *) malloc(sizeof(int) * array_capacity);
-  if (!CloneArray(input_array, clone_array, array_size)) {
+  if (!cloneArray(input_array, clone_array, array_size)) {
     printf("ERROR: cloning array failed! Aborting...\n");
     return 0;
   }
   printf("Array successfully cloned.\n");
-  /*PrintArrayElements(clone_array, array_size);*/
+  /*printArrayElements(clone_array, array_size);*/
 
-  SortArray(clone_array, 0, array_size - 1);
+  sortArray(clone_array, 0, array_size - 1);
   printf("Array successfully sorted using quicksort.\n");
-  /*PrintArrayElements(clone_array, array_size);*/
+  /*printArrayElements(clone_array, array_size);*/
 
-  SearchIntegers(input_array, clone_array, array_size);
+  searchIntegers(input_array, clone_array, array_size);
 
   printf("Cleaning up the mess...\n");
-  CleanArray(input_array);
+  cleanArray(input_array);
   printf("Done...\n");
 
   printf("Goodbye!\n");

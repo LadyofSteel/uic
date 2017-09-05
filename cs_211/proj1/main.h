@@ -24,7 +24,7 @@ typedef enum { false, true } bool;
  *  @param int* reference to array size
  *  @return bool resize successful
 */
-bool ResizeArray(int **array, int *capacity, int *size);
+bool resizeArray(int **array, int *capacity, int *size);
 
 /**
  *  @brief Cleans up array
@@ -35,7 +35,7 @@ bool ResizeArray(int **array, int *capacity, int *size);
  *  @param int* input array
  *  @return bool cleanup successful
 */
-bool CleanArray(int *array);
+bool cleanArray(int *array);
 
 /**
  *  @brief Inserts integers from user input
@@ -47,7 +47,7 @@ bool CleanArray(int *array);
  *  @param int* reference to current array capacity
  *  @param int* reference to current array size
 */
-void InsertIntegers(int **array, int *capacity, int *size);
+void insertIntegers(int **array, int *capacity, int *size);
 
 /**
  *  @brief Inserts integers from user input
@@ -58,20 +58,20 @@ void InsertIntegers(int **array, int *capacity, int *size);
  *  @param int* sorted input array
  *  @param int current array size
 */
-void SearchIntegers(int *unsorted_array, int * sorted_array, int size);
+void searchIntegers(int *unsorted_array, int * sorted_array, int size);
 
 /**
  *  @brief Prints out the search results
  *
  *  Prints out the important information for the given array name.
  *
- *  @sa SearchIntegers()
+ *  @sa searchIntegers()
  *  @param const char* array name
  *  @param const int search value
  *  @param const int index
  *  @param const int number of comparisons performed
 */
-void PrintResults(const char *array, const int value, const int index, const int comparisons);
+void printResults(const char *array, const int value, const int index, const int comparisons);
 
 /**
  *  @brief Creates a clone array
@@ -85,7 +85,7 @@ void PrintResults(const char *array, const int value, const int index, const int
  *  @param int array size
  *  @return bool cloning successful
 */
-bool CloneArray(int *source, int *destination, int size);
+bool cloneArray(int *source, int *destination, int size);
 
 /**
  *  @brief Utility function to swap two integers
@@ -96,7 +96,7 @@ bool CloneArray(int *source, int *destination, int size);
  *  @param int* reference to first integer
  *  @param int* reference to second integer
 */
-void SwapInts(int *a, int *b);
+void swapInts(int *a, int *b);
 
 /**
  *  @brief Helper function for quicksort
@@ -109,7 +109,7 @@ void SwapInts(int *a, int *b);
  *  @param int ending index
  *  @return int pivot point
 */
-int _SortArray (int *array, int start_index, int end_index);
+int _sortArray (int *array, int start_index, int end_index);
 
 /**
  *  @brief Sorts array using quicksort
@@ -121,7 +121,7 @@ int _SortArray (int *array, int start_index, int end_index);
  *  @param int starting index
  *  @param int ending index
 */
-void SortArray (int *array, int start_index, int end_index);
+void sortArray (int *array, int start_index, int end_index);
 
 /**
  *  @brief Array linear search
@@ -137,7 +137,7 @@ void SortArray (int *array, int start_index, int end_index);
  *  @param int* reference to the number of comparisons
  *  @return int index of value to be found
 */
-int LinearSearch(int *array, int size, int target, int *comparisons);
+int linearSearch(int *array, int size, int target, int *comparisons);
 
 /**
  *  @brief Array binary search
@@ -153,4 +153,4 @@ int LinearSearch(int *array, int size, int target, int *comparisons);
  *  @param int* reference to the number of comparisons
  *  @return int index of value to be found
 */
-int BinarySearch(int *array, int size, int target, int *comparisons);
+int binarySearch(int *array, int size, int target, int *comparisons);
