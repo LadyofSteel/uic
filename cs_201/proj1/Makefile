@@ -1,7 +1,7 @@
 CC 			:= g++
 SRCDIR 	:= .
 SRCEXT 	:= cpp
-TARGET 	:= proj3
+TARGET 	:= proj1
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 CFLAGS 	:= -g -Wall
 
