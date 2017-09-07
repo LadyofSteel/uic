@@ -18,14 +18,17 @@
 
 bool resizeArray(int **array, int *capacity, int *size)
 {
+  // Use a temporary array that has twice the capacity
   int *temp_array = (int *) malloc(2 * *capacity * sizeof(int));
   
+  // Clone the original array to the temporary array
   if (!cloneArray(*array, temp_array, *size))
     return false;
 
   if (!cleanArray(*array))
     return false;
 
+  // Now set the original array to be the temporary array, and update the array capacity
   (*array) = temp_array;
   (*capacity) *= 2;
 
@@ -40,56 +43,6 @@ bool cleanArray(int *array)
 
   free(array);
   return true;
-}
-
-void insertIntegers(int **array, int *capacity, int *size)
-{
-  int input = 0;
-  int position = 0;
-
-  printf("Please enter integer values to add (-999 to stop):\n");
-
-  scanf("%d", &input);
-  while (input != -999) {
-    (*array)[position] = input;
-    position++;
-    (*size)++;
-
-    if (position >= *capacity)
-      resizeArray(array, capacity, size);
-
-    scanf("%d", &input);
-  }
-}
-
-void searchIntegers(int *unsorted_array, int *sorted_array, int size)
-{
-  int input = 0;
-
-  printf("Please enter integer values to search for (-999 to stop):\n");
-
-  scanf("%d", &input);
-  while (input != -999) {
-    int linear_comparisons = 0;
-    int binary_comparisons = 0;
-    const int linear_index = linearSearch(unsorted_array, size, input, &linear_comparisons);
-    const int binary_index = binarySearch(sorted_array, size, input, &binary_comparisons);
-
-    printResults("Linear search - Unsorted array", input, linear_index, linear_comparisons);
-    printResults("Binary search - Sorted array", input, binary_index, binary_comparisons);
-    printf("\n");
-
-    scanf("%d", &input);
-  }
-}
-
-void printResults(const char *array, const int value, const int index, const int comparisons)
-{
-  if (index == -1) {
-    printf("%s: integer %d was not found after %d comparisons.\n", array, value, comparisons);
-  } else {
-    printf("%s: integer %d was found at position %d after %d comparisons.\n", array, value, index, comparisons);
-  }
 }
 
 bool cloneArray(int *source, int *destination, int size)
@@ -117,6 +70,7 @@ int _sortArray (int *array, int start_index, int end_index)
   int i = start_index - 1;
   int j;
 
+  // Move all integers in the correct position with resepct to the pivot
   for (j = start_index; j <= end_index - 1; j++) {
     if (array[j] <= pivot) {
       i++;
@@ -139,6 +93,62 @@ void sortArray(int *array, int start_index, int end_index)
   }
 }
 
+void insertIntegers(int **array, int *capacity, int *size)
+{
+  int input = 0;
+  int position = 0;
+
+  printf("Please enter integer values to add (-999 to stop):\n");
+
+  // User input
+  scanf("%d", &input);
+  while (input != -999) {
+    (*array)[position] = input;
+    position++;
+    (*size)++;
+
+    // Resize array if it's full
+    if (position >= *capacity)
+      resizeArray(array, capacity, size);
+
+    scanf("%d", &input);
+  }
+}
+
+void searchIntegers(int *unsorted_array, int *sorted_array, int size)
+{
+  int input = 0;
+
+  printf("Please enter integer values to search for (-999 to stop):\n");
+
+  // User input
+  scanf("%d", &input);
+  while (input != -999) {
+    int linear_comparisons = 0;
+    int binary_comparisons = 0;
+    
+    // Run the search methods
+    const int linear_index = linearSearch(unsorted_array, size, input, &linear_comparisons);
+    const int binary_index = binarySearch(sorted_array, size, input, &binary_comparisons);
+
+    // Print results for both search methods
+    printResults("Linear search - Unsorted array", input, linear_index, linear_comparisons);
+    printResults("Binary search - Sorted array", input, binary_index, binary_comparisons);
+    printf("\n");
+
+    scanf("%d", &input);
+  }
+}
+
+void printResults(const char *array, const int value, const int index, const int comparisons)
+{
+  if (index == -1) {
+    printf("%s: integer %d was not found after %d comparisons.\n", array, value, comparisons);
+  } else {
+    printf("%s: integer %d was found at position %d after %d comparisons.\n", array, value, index, comparisons);
+  }
+}
+
 int linearSearch(int *array, int size, int target, int *comparisons)
 {
   int index;
@@ -149,6 +159,7 @@ int linearSearch(int *array, int size, int target, int *comparisons)
       break;
   }
 
+  // Target not found
   if (index == size)
     return -1;
 
@@ -173,6 +184,7 @@ int binarySearch(int *array, int size, int target, int *comparisons)
     }
   }
 
+  // Target not found
   return -1;
 }
 

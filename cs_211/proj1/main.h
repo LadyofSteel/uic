@@ -38,6 +38,53 @@ bool resizeArray(int **array, int *capacity, int *size);
 bool cleanArray(int *array);
 
 /**
+ *  @brief Creates a clone array
+ *
+ *  Creates a clone of the source array and puts it in the destination array.
+ *  It basically creates an identical, separate copy of source, and assigns it
+ *  to destination.
+ *
+ *  @param int* source array to clone
+ *  @param int* destination array
+ *  @param int array size
+ *  @return bool cloning successful
+*/
+bool cloneArray(int *source, int *destination, int size);
+
+/**
+ *  @brief Utility function to swap two integers
+ *
+ *  @param int* reference to first integer
+ *  @param int* reference to second integer
+*/
+void swapInts(int *a, int *b);
+
+/**
+ *  @brief Helper function to perform quicksort
+ *
+ *  Performs the partitioning of a given array for proper quicksort implementation.
+ *  Reference: http://www.geeksforgeeks.org/quick-sort/
+ *
+ *  @param int* array to be sorted
+ *  @param int starting index
+ *  @param int ending index
+ *  @return int pivot point
+*/
+int _sortArray (int *array, int start_index, int end_index);
+
+/**
+ *  @brief Sorts array using quicksort
+ *
+ *  Sorts the given integer array in ascending order using quicksort algorithm.
+ *  Reference: http://www.geeksforgeeks.org/quick-sort/
+ *
+ *  @param int* array to be sorted
+ *  @param int starting index
+ *  @param int ending index
+*/
+void sortArray (int *array, int start_index, int end_index);
+
+/**
  *  @brief Inserts integers from user input
  *
  *  Reads user input and inserts it in the given integer array. The array size is
@@ -72,56 +119,6 @@ void searchIntegers(int *unsorted_array, int * sorted_array, int size);
  *  @param const int number of comparisons performed
 */
 void printResults(const char *array, const int value, const int index, const int comparisons);
-
-/**
- *  @brief Creates a clone array
- *
- *  Creates a clone of the source array and puts it in the destination array.
- *  It basically creates an identical, separate copy of source, and assigns it
- *  to destination.
- *
- *  @param int* source array to clone
- *  @param int* destination array
- *  @param int array size
- *  @return bool cloning successful
-*/
-bool cloneArray(int *source, int *destination, int size);
-
-/**
- *  @brief Utility function to swap two integers
- *
- *  Performs the partitioning of a given array for proper quicksort implementation.
- *  Reference: http://www.geeksforgeeks.org/quick-sort/
- *
- *  @param int* reference to first integer
- *  @param int* reference to second integer
-*/
-void swapInts(int *a, int *b);
-
-/**
- *  @brief Helper function for quicksort
- *
- *  Performs the partitioning of a given array for proper quicksort implementation.
- *  Reference: http://www.geeksforgeeks.org/quick-sort/
- *
- *  @param int* array to be sorted
- *  @param int starting index
- *  @param int ending index
- *  @return int pivot point
-*/
-int _sortArray (int *array, int start_index, int end_index);
-
-/**
- *  @brief Sorts array using quicksort
- *
- *  Sorts the given integer array in ascending order using quicksort algorithm.
- *  Reference: http://www.geeksforgeeks.org/quick-sort/
- *
- *  @param int* array to be sorted
- *  @param int starting index
- *  @param int ending index
-*/
-void sortArray (int *array, int start_index, int end_index);
 
 /**
  *  @brief Array linear search
