@@ -8,6 +8,8 @@ Recompilation should work just fine with `make`, since the source files are set 
 
 For manual compilation, type `gcc -o proj1 main.c`. Then run the executable using `./proj1`.
 
+To clean up, enter `make clean`.
+
 ##### Redirection
 If you wish to use any input files using redirection, the `make` commands will still work fine. So you can just enter `make all < input1.txt` and the program will compile and run using `input1.txt` as the input for the executable.
 
