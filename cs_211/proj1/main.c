@@ -188,6 +188,8 @@ int binarySearch(int *array, int size, int target, int *comparisons)
   return -1;
 }
 
+// Utility function to print out all the array elements.
+// Only used for debugging purposes.
 void printArrayElements(int *array, int size)
 {
   int index;
