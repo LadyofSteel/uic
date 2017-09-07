@@ -29,7 +29,7 @@ bool resizeArray(int **array, int *capacity, int *size)
   (*array) = temp_array;
   (*capacity) *= 2;
 
-  printf("Resize successful\n");
+  // printf("Resize successful\n");
   return true;
 }
 
@@ -75,14 +75,9 @@ void searchIntegers(int *unsorted_array, int *sorted_array, int size)
     const int linear_index = linearSearch(unsorted_array, size, input, &linear_comparisons);
     const int binary_index = binarySearch(sorted_array, size, input, &binary_comparisons);
 
-    if (linear_index == -1 &&
-        binary_index == -1) {
-      printf("Integer %d was not found in the arrays\n", input);
-    } else {
-      printResults("Linear search - Unsorted array", input, linear_index, linear_comparisons);
-      printResults("Binary search - Sorted array", input, binary_index, binary_comparisons);
-      printf("\n");
-    }
+    printResults("Linear search - Unsorted array", input, linear_index, linear_comparisons);
+    printResults("Binary search - Sorted array", input, binary_index, binary_comparisons);
+    printf("\n");
 
     scanf("%d", &input);
   }
@@ -90,7 +85,11 @@ void searchIntegers(int *unsorted_array, int *sorted_array, int size)
 
 void printResults(const char *array, const int value, const int index, const int comparisons)
 {
-  printf("%s: found %d at position %d after %d comparisons.\n", array, value, index, comparisons);
+  if (index == -1) {
+    printf("%s: integer %d was not found after %d comparisons.\n", array, value, comparisons);
+  } else {
+    printf("%s: integer %d was found at position %d after %d comparisons.\n", array, value, index, comparisons);
+  }
 }
 
 bool cloneArray(int *source, int *destination, int size)
@@ -119,10 +118,8 @@ int _sortArray (int *array, int start_index, int end_index)
   int j;
 
   for (j = start_index; j <= end_index - 1; j++) {
-    // If current element is smaller than or
-    // equal to pivot
     if (array[j] <= pivot) {
-      i++;    // increment index of smaller element
+      i++;
       swapInts( &(array[i]), &(array[j]) );
     }
   }
@@ -205,11 +202,11 @@ int main()
     return 0;
   }
   printf("Array successfully cloned.\n");
-  /*printArrayElements(clone_array, array_size);*/
+  // printArrayElements(clone_array, array_size);
 
   sortArray(clone_array, 0, array_size - 1);
   printf("Array successfully sorted using quicksort.\n");
-  /*printArrayElements(clone_array, array_size);*/
+  // printArrayElements(clone_array, array_size);
 
   searchIntegers(input_array, clone_array, array_size);
 
