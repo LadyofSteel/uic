@@ -11,6 +11,8 @@ $(TARGET): $(SOURCES)
 run:
 	./$(TARGET)
 
+all: $(TARGET) run
+
 clean:
 	@echo "Cleaning..."
 	$(RM) $(TARGET)
