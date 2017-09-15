@@ -5,7 +5,7 @@ SOURCES 			:= $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)" | grep -vG "Tes
 JFLAGS 				:= -g
 TARGET 				:= Game
 TESTS 				:= $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
-TEST_TARGETS 	:= TestCard TestCardPile
+TEST_TARGETS 	:= # ADD YOUR TEST CLASSES HERE
 
 build: $(SOURCES)
 	$(JC) $(JFLAGS) $(SOURCES)

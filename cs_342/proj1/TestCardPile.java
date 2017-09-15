@@ -1,17 +1,17 @@
 import junit.framework.TestCase;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class TestCardPile extends TestCase {
   public void testCards()
   {
     CardPile test_pile = new CardPile();
-    Vector<Card> cards1 = new Vector<Card>();
+    ArrayList<Card> cards1 = new ArrayList<Card>();
 
     for (int i = 2; i < 15; i++)
       cards1.add(new Card(i, 'S'));
 
     test_pile.setCards(cards1);
-    Vector<Card> cards2 = test_pile.getCards();
+    ArrayList<Card> cards2 = test_pile.getCards();
 
     assertTrue(cards1.equals(cards2));
   }
@@ -23,7 +23,7 @@ public class TestCardPile extends TestCase {
     for (int i = 2; i < 15; i++)
       test_pile.addCard(new Card(i, 'H'));
 
-    Vector<Card> cards = test_pile.getCards();
+    ArrayList<Card> cards = test_pile.getCards();
 
     for (int i = 0; i < 13; i++) {
       int rank = cards.get(i).getRank();
