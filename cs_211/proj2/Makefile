@@ -12,6 +12,9 @@ $(TARGET): $(SOURCES) $(HEADERS)
 run:
 	./$(TARGET)
 
+debug:
+	./$(TARGET) -d
+
 all: $(TARGET) run
 
 clean:
