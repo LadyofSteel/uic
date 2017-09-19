@@ -11,7 +11,15 @@
 #include "main.h"
 #include "stack.h"
 
+bool isDebug = false;
+
 int main(int argc, char *argv[])
 {
+  if (argc > 1)
+  {
+    if (!strcmp(argv[1], "-d"))
+        isDebug = true;
+  }
+
   return 0;
 }
