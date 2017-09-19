@@ -4,19 +4,21 @@
  *  @author Ammar Subei
 */
 
-typedef enum { false, true } bool;
+typedef enum
+{
+  false,
+  true
+} bool;
 
+/**
+ *  @brief Struct for a stack object
+*/
 typedef struct Stack
 {
-  char *stack;
-  int capacity;
-  int top;
+  char *stack;  ///< Pointer to actual memory location
+  int capacity; ///< Stack capacity
+  int size;     ///< Stack size (used space)
 } Stack;
-
-typedef union
-{
-  char symbol;
-} Symbol;
 
 /**
  *  @brief Initialize the stack
@@ -31,7 +33,7 @@ bool isEmpty(Stack stack);
 /**
  *  @brief Pushes element onto stack
 */
-void push(Symbol symbol);
+void push(char symbol);
 
 /**
  *  @brief Pops the stack
@@ -41,7 +43,7 @@ bool pop();
 /**
  *  @brief Gets top element from stack
 */
-Symbol top();
+char top();
 
 /**
  *  @brief Resets stack

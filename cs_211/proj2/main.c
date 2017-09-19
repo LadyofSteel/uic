@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "stack.h"
+#include "main.h"
 
 int main()
 {
