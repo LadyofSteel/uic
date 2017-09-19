@@ -9,8 +9,9 @@
 #include <string.h>
 
 #include "main.h"
+#include "stack.h"
 
-int main()
+int main(int argc, char *argv[])
 {
   return 0;
 }

@@ -1,8 +1,11 @@
 /**
- *  @brief CS 211 Project 1
+ *  @brief CS 211 Project 2
  *
  *  @author Ammar Subei
 */
+
+#ifndef STACK_H
+#define STACK_H
 
 typedef enum
 {
@@ -49,3 +52,5 @@ char top();
  *  @brief Resets stack
 */
 void resetStack();
+
+#endif /* STACK_H */

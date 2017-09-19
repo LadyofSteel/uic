@@ -3,9 +3,10 @@ SRCDIR 	:= .
 SRCEXT 	:= c
 TARGET 	:= proj2
 SOURCES := $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
+HEADERS := $(shell find $(SRCDIR) -type f -name "*.h")
 CFLAGS 	:= -g -Wall
 
-$(TARGET): $(SOURCES)
+$(TARGET): $(SOURCES) $(HEADERS)
 	$(CC) -o $@ $(SOURCES) $(CFLAGS)
 
 run:
