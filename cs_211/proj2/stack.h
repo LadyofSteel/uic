@@ -50,7 +50,7 @@ void resetStack(Stack *stack);
  *  @param Stack object to check
  *  @return boolean stack is empty
 */
-bool isEmpty(Stack *stack);
+bool isEmpty(const Stack *stack);
 
 /**
  *  @brief Checks if stack is full
@@ -58,7 +58,14 @@ bool isEmpty(Stack *stack);
  *  @param Stack object to check
  *  @return boolean stack is full
 */
-bool isFull(Stack *stack);
+bool isFull(const Stack *stack);
+
+/**
+ *  @brief Prints out all stack elements
+ *
+ *  @param Stack object to print out
+*/
+void printStack(const Stack *stack);
 
 /**
  *  @brief Pushes element onto stack
@@ -66,7 +73,7 @@ bool isFull(Stack *stack);
  *  @param Stack object
  *  @param symbol character to push
 */
-void push(Stack *stack, char symbol);
+void push(Stack *stack, const char symbol);
 
 /**
  *  @brief Pops the stack
@@ -85,6 +92,6 @@ bool pop(Stack *stack);
  *  @param Stack object
  *  @return symbol character at top of stack
 */
-char top(Stack *stack);
+char top(const Stack *stack);
 
 #endif /* STACK_H */

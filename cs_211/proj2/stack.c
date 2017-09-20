@@ -5,6 +5,7 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "stack.h"
 
@@ -12,39 +13,49 @@ void initStack(Stack *stack)
 {
   stack->capacity = 2;
   stack->size = 0;
-  stack->data = (char *) malloc(sizeof(char) * stack->capacity);
+  stack->data = (char *) malloc(stack->capacity);
 }
 
 void resizeStack(Stack *stack)
 {
   stack->capacity += 2;
 
-  char *temp_data = (char *) malloc(sizeof(char) * stack->capacity);
+  char *temp_data = (char *) malloc(stack->capacity);
 
   int i;
   for (i = 0; i < stack->size; i++)
-  {
     temp_data[i] = stack->data[i];
-  }
 
   (stack->data) = temp_data;
 }
 
 void resetStack(Stack *stack)
 {
+  free(stack->data);
+  initStack(stack);
 }
 
-bool isEmpty(Stack *stack)
+bool isEmpty(const Stack *stack)
 {
   return ( stack->size == 0 );
 }
 
-bool isFull(Stack *stack)
+bool isFull(const Stack *stack)
 {
   return ( stack->size == stack->capacity );
 }
 
-void push(Stack *stack, char symbol)
+void printStack(const Stack *stack)
+{
+  printf("Printing stack elements\n\n");
+
+  int i;
+  for (i = 0; i < stack->size; i++) {
+    printf("Element %d: %c\n", i, stack->data[i]);
+  }
+}
+
+void push(Stack *stack, const char symbol)
 {
   if ( isFull(stack) )
     resizeStack(stack);
@@ -62,7 +73,7 @@ bool pop(Stack *stack)
   return true;
 }
 
-char top(Stack *stack)
+char top(const Stack *stack)
 {
   if ( !isEmpty(stack) )
     return ( stack->data[stack->size - 1] );
