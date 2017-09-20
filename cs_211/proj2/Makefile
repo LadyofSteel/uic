@@ -12,10 +12,10 @@ $(TARGET): $(SOURCES) $(HEADERS)
 run:
 	./$(TARGET)
 
-debug:
+debug: clean $(TARGET)
 	./$(TARGET) -d
 
-all: $(TARGET) run
+all: clean $(TARGET) run
 
 clean:
 	@echo "Cleaning..."
