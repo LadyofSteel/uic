@@ -1,6 +1,8 @@
 /**
  *  @brief CS 211 Project 2
  *
+ *  This file is used to define how the Stack object functions and is used.
+ *
  *  @author Ammar Subei
 */
 

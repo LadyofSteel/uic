@@ -1,6 +1,8 @@
 /**
  *  @brief CS 211 Project 2
  *
+ *  Main file header.
+ *
  *  @author Ammar Subei
 */
 

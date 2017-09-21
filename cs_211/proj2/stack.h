@@ -1,6 +1,8 @@
 /**
  *  @brief CS 211 Project 2
  *
+ *  This file is used to create and use a stack object.
+ *
  *  @author Ammar Subei
 */
 

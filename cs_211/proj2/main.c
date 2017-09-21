@@ -1,6 +1,10 @@
 /**
  *  @brief CS 211 Project 2
  *
+ *  Main source file that defines all functions and uses the stack to implement the 
+ *  program defined for class. The Stack object is used to check if a given expression
+ *  has balanced open/close symbols.
+ *
  *  @author Ammar Subei
 */
 
