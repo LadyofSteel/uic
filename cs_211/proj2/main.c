@@ -11,6 +11,7 @@
 #include "main.h"
 #include "stack.h"
 
+// Global variable for debug mode
 bool debug_mode = false;
 
 bool isOpenSymbol(const char input)
@@ -72,14 +73,16 @@ void printUnbalanced(const char* message, const char symbol, const int position)
   printf("^ %s %c\n", message, symbol);
 }
 
-void readline(Stack *stack)
+void processLine(Stack *stack)
 {
   int input_size = 300;
   char *input = (char *) malloc(input_size);
 
+  // Read one line from stdin
   fgets(input, input_size, stdin);
-  input[strcspn(input, "\r\n")] = '\0'; // strip EOL char(s)
-
+  // Strip EOL char(s)
+  input[strcspn(input, "\r\n")] = '\0';
+  // Update input size accordingly
   input_size = strlen(input);
 
   int i;
@@ -101,32 +104,48 @@ void readline(Stack *stack)
   
   if (i == input_size) {
     if (!isEmpty(stack)) {
+      // If we went through the expression but missing closing symbols
       const char missing_symbol = getCorrespondingSymbol(top(stack));
       printUnbalanced("missing symbol", missing_symbol, i);
     } else {
+      // If we went through the expression with no issues
       printf("Expression is balanced! Way to go!\n");
     }
   } else if (isEmpty(stack)) {
+    // If stack was empty in the middle of the expression
     const char missing_symbol = getCorrespondingSymbol(input[i]);
     printUnbalanced("missing symbol", missing_symbol, i);
   } else {
+    // If closing symbol was the wrong one
     const char missing_symbol = getCorrespondingSymbol(input[i]);
     printUnbalanced("expecting symbol", missing_symbol, i);
   }
 }
 
+void cleanup(Stack *stack)
+{
+  free(stack->data);
+  free(stack);
+}
+
 int main(int argc, char *argv[])
 {
+  // First check if we're running in debug mode
   if (argc > 1) {
     if (!strcmp(argv[1], "-d"))
         debug_mode = true;
   }
 
+  // Initialize the stack
   Stack *stack = (Stack *) malloc(sizeof(Stack));
-
   initStack(stack);
 
-  readline(stack);
+  // Read one line from user and display results
+  processLine(stack);
 
+  // Clean up the mess
+  cleanup(stack);
+
+  // Kaboom
   return 0;
 }

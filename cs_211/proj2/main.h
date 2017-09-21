@@ -62,6 +62,13 @@ void printUnbalanced(const char *message, const char symbol, const int position)
  *
  *  @param Stack object to update
 */
-void readline(Stack *stack);
+void processLine(Stack *stack);
+
+/**
+ *  @brief Cleans up allocated memory
+ *
+ *  @param Stack object to free
+*/
+void cleanup(Stack *stack);
 
 #endif /* MAIN_H */
