@@ -55,14 +55,24 @@ bool checkBalanced(Stack *stack, const char symbol);
 void printUnbalanced(const char *message, const char symbol, const int position);
 
 /**
- *  @brief Reads user input line
+ *  @brief Reads all user input
  *
- *  Reads one line from user (stdin) and updates the given stack accordingly. All results are
- *  handled in this function.
+ *  Reads all user input lines until Q or q is entered.
  *
  *  @param Stack object to update
 */
-void processLine(Stack *stack);
+void readInput(Stack *stack);
+
+/**
+ *  @brief Processes one expression/line
+ *
+ *  Processes given expression and updates the given stack accordingly.
+ *  All results are handled in this function.
+ *
+ *  @param string input line
+ *  @param Stack object to update
+*/
+void processLine(char *input_line, Stack *stack);
 
 /**
  *  @brief Cleans up allocated memory

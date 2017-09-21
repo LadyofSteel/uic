@@ -55,7 +55,7 @@ bool checkBalanced(Stack *stack, const char symbol)
 {
   if ( top(stack) == getCorrespondingSymbol(symbol) ) {
     if (debug_mode)
-      printf("Popping the stack, top symbol was %c\n", top(stack));
+      printf("\nDEBUG: Popping the stack, top symbol was %c\n", top(stack));
 
     pop(stack);
     return true;
@@ -73,34 +73,61 @@ void printUnbalanced(const char* message, const char symbol, const int position)
   printf("^ %s %c\n", message, symbol);
 }
 
-void processLine(Stack *stack)
+void readInput(Stack *stack)
 {
-  int input_size = 300;
-  char *input = (char *) malloc(input_size);
+  int input_size;
+  char *input;
+  while (true) {
+    input_size = 300;
+    input = (char *) malloc(input_size);
 
-  // Read one line from stdin
-  fgets(input, input_size, stdin);
-  // Strip EOL char(s)
-  input[strcspn(input, "\r\n")] = '\0';
-  // Update input size accordingly
-  input_size = strlen(input);
+    printf("\nPlease enter an expression\n");
+
+    // Read one line from stdin
+    fgets(input, input_size, stdin);
+    // Strip EOL char(s)
+    input[strcspn(input, "\r\n")] = '\0';
+    // Update input size accordingly
+    input_size = strlen(input);
+
+    if ( !strcmp(input, "Q") || !strcmp(input, "q") )
+      break;
+
+    if (debug_mode)
+      printf("\nDEBUG: Processing your input\n");
+
+    processLine(input, stack);
+
+    if (debug_mode)
+      printf("\nDEBUG: Resetting the stack\n");
+
+    resetStack(stack);
+  }
+
+  free(input);
+  printf("No more? Alright...\n");
+}
+
+void processLine(char *input_line, Stack *stack)
+{
+  int input_size = strlen(input_line);
 
   int i;
   for (i = 0; i < input_size; i++) {
     // Only push an open symbol character
-    if ( isOpenSymbol(input[i]) ) {
+    if ( isOpenSymbol(input_line[i]) ) {
       if (debug_mode)
-        printf("Pushing symbol %c into the stack\n", input[i]);
+        printf("\nDEBUG: Pushing symbol %c into the stack\n", input_line[i]);
 
-      push(stack, input[i]);
-    } else if ( isCloseSymbol(input[i]) ) {
-      if ( !checkBalanced(stack, input[i]) )
+      push(stack, input_line[i]);
+    } else if ( isCloseSymbol(input_line[i]) ) {
+      if ( !checkBalanced(stack, input_line[i]) )
         break;
     }
   }
 
   printf("You entered the expression:\n");
-  printf("%s\n", input);
+  printf("%s\n", input_line);
   
   if (i == input_size) {
     if (!isEmpty(stack)) {
@@ -113,17 +140,20 @@ void processLine(Stack *stack)
     }
   } else if (isEmpty(stack)) {
     // If stack was empty in the middle of the expression
-    const char missing_symbol = getCorrespondingSymbol(input[i]);
+    const char missing_symbol = getCorrespondingSymbol(input_line[i]);
     printUnbalanced("missing symbol", missing_symbol, i);
   } else {
     // If closing symbol was the wrong one
-    const char missing_symbol = getCorrespondingSymbol(input[i]);
+    const char missing_symbol = getCorrespondingSymbol(top(stack));
     printUnbalanced("expecting symbol", missing_symbol, i);
   }
 }
 
 void cleanup(Stack *stack)
 {
+  if (debug_mode)
+    printf("\nDEBUG: Cleaning up the mess\n");
+
   free(stack->data);
   free(stack);
 }
@@ -140,11 +170,13 @@ int main(int argc, char *argv[])
   Stack *stack = (Stack *) malloc(sizeof(Stack));
   initStack(stack);
 
-  // Read one line from user and display results
-  processLine(stack);
+  // Read user input until "q" or "Q" is entered
+  readInput(stack);
 
   // Clean up the mess
   cleanup(stack);
+
+  printf("Goodbye\n");
 
   // Kaboom
   return 0;
