@@ -3,7 +3,7 @@ SRCDIR 				:= .
 SRCEXT 				:= java
 SOURCES 			:= $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)" | grep -vG "Test*")
 JFLAGS 				:= -g
-TARGET 				:= Game
+TARGET 				:= MainWindow
 TESTS 				:= $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
 TEST_TARGETS 	:= # ADD YOUR TEST CLASSES HERE
 
@@ -13,7 +13,7 @@ build: $(SOURCES)
 run:
 	java $(TARGET)
 
-all: build run
+all: clean build run
 
 tests: $(TESTS)
 	javac -cp /usr/share/java/junit4.jar $(TESTS)
