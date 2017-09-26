@@ -117,7 +117,7 @@ public class Hand {
   }
 
   /**
-   *  @brief Adds a card to hand
+   *  @brief Discards a card to hand
   */
   public void discard(String card_to_remove)
   {
