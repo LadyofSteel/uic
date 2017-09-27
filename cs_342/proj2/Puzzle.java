@@ -1,30 +1,42 @@
+import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Puzzle extends JPanel implements ActionListener
+public class Puzzle extends JPanel
 {
   private JToggleButton buttons[];
-  private final String buttonNames[] = 
-  { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", ""};
+  private ArrayList<Integer> puzzlePieces;
 
   public Puzzle()
   {
     super( new GridLayout(4,4) );
-
-    ButtonGroup group = new ButtonGroup();
-    buttons = new JToggleButton[ buttonNames.length ];
-
-    for (int count = 0; count < buttonNames.length; count++) {
-      buttons[count] = new JToggleButton( buttonNames[count] );
-
-      group.add( buttons[count] );
-      this.add( buttons[count] );
-      buttons[count].setSelected(true);
-    }
+    initPieces();
+    initGrid();
   }
 
-  public void actionPerformed(ActionEvent event)
+  private void initPieces()
   {
+    puzzlePieces = new ArrayList<Integer>();
+
+    for (int i = 1; i < 17; i++)
+      puzzlePieces.add(i);
+  }
+
+  private void initGrid()
+  {
+    ButtonGroup toggleGroup = new ButtonGroup();
+    buttons = new JToggleButton[ puzzlePieces.size() ];
+
+    for (int i = 0; i < puzzlePieces.size(); i++) {
+      if (puzzlePieces.get(i) == 16)
+        buttons[i] = new JToggleButton("");
+      else
+        buttons[i] = new JToggleButton( String.valueOf(puzzlePieces.get(i)) );
+
+      toggleGroup.add( buttons[i] );
+      this.add( buttons[i] );
+      buttons[i].setSelected(true);
+    }
   }
 }

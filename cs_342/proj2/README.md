@@ -1,6 +1,6 @@
-# CS 342 Project 1
+# CS 342 Project 2
 
-Due date: Wed, Sept. 13th
+Due date: Wed, Oct. 4th
 
 ### Usage
 A makefile is provided for easier compilation. Enter `make` or `make build` to build the project. Enter `make run` to run the program. If you want to build and run, just enter `make all`.
@@ -11,5 +11,3 @@ For any existing unit tests (using JUnit4), you can enter `make tests` to build 
 To clean up, enter `make clean`.
 
 #### Notes
-* The opponent player does not have the AI implemented. As of now, the CPU players are simply dealt the cards, and that's it. Their hands are compared with everyone else at the end.
-* I have implemented the extra-credit card sort.
