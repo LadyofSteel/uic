@@ -5,27 +5,27 @@ import javax.swing.*;
 public class MainWindow extends JFrame implements ActionListener
 {
   private Container container;
-  private Puzzle puzzleGrid;
   private JMenuBar menu;
+  private Puzzle puzzleGrid;
 
-  // set up GUI
+  // Set up GUI
   public MainWindow()
   {
-    super( "Puzzle Game" );
+    super("Puzzle Game" );
     initMenuBar();
 
     puzzleGrid = new Puzzle();
 
-    // get content pane and set its layout
+    // Get content pane and set its layout
     container = getContentPane();
     container.setLayout( new BorderLayout() );
     this.setJMenuBar(menu);
 
     container.add( puzzleGrid, BorderLayout.CENTER );
-    setSize( 400, 400 );
-    setVisible( true );
 
-  } // end constructor GridLayoutDemo
+    setSize(400,400);
+    setVisible(true);
+  }
 
   private void initMenuBar()
   {
@@ -34,20 +34,21 @@ public class MainWindow extends JFrame implements ActionListener
     JMenu fileMenu = new JMenu("File");
     fileMenu.setMnemonic('F');
 
-    JMenuItem newItem = new JMenuItem("New");
-    newItem.setMnemonic('N');
-    JMenuItem exitItem = new JMenuItem("Exit");
-    exitItem.setMnemonic('E');
+    JMenuItem shuffleItem = new JMenuItem("Shuffle");
+    shuffleItem.setMnemonic('H');
 
-    newItem.addActionListener(
+    shuffleItem.addActionListener(
         new ActionListener() {
           public void actionPerformed(ActionEvent event)
           {
-            JOptionPane.showMessageDialog(MainWindow.this,
-                "BLABLABLA",
-                "NEW", JOptionPane.PLAIN_MESSAGE);
+            puzzleGrid.shuffle();
           }
         });
+
+    JMenuItem solveItem = new JMenuItem("Solve");
+    solveItem.setMnemonic('S');
+    JMenuItem exitItem = new JMenuItem("Exit");
+    exitItem.setMnemonic('E');
 
     exitItem.addActionListener(
         new ActionListener() {
@@ -64,20 +65,29 @@ public class MainWindow extends JFrame implements ActionListener
     undoItem.setMnemonic('U');
     JMenuItem undoAllItem = new JMenuItem("Undo All");
     undoAllItem.setMnemonic('A');
-    JMenuItem solveItem = new JMenuItem("Solve");
-    solveItem.setMnemonic('S');
-    JMenuItem shuffleItem = new JMenuItem("Shuffle");
-    shuffleItem.setMnemonic('H');
 
-    fileMenu.add(newItem);
+    JMenu helpMenu = new JMenu("Help");
+    helpMenu.setMnemonic('H');
+
+    JMenuItem instructionsItem = new JMenuItem("Instructions");
+    instructionsItem.setMnemonic('I');
+    JMenuItem aboutItem = new JMenuItem("About...");
+    aboutItem.setMnemonic('A');
+    JMenuItem licenseItem = new JMenuItem("License");
+    licenseItem.setMnemonic('L');
+
+    fileMenu.add(shuffleItem);
+    fileMenu.add(solveItem);
     fileMenu.add(exitItem);
     editMenu.add(undoItem);
     editMenu.add(undoAllItem);
-    editMenu.add(solveItem);
-    editMenu.add(shuffleItem);
+    helpMenu.add(instructionsItem);
+    helpMenu.add(aboutItem);
+    helpMenu.add(licenseItem);
 
     menu.add(fileMenu);
     menu.add(editMenu);
+    menu.add(helpMenu);
   }
 
   // handle button events by toggling between layouts
@@ -92,4 +102,4 @@ public class MainWindow extends JFrame implements ActionListener
     application.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
   } 
 
-} // end class GridLayoutDemo
+}
