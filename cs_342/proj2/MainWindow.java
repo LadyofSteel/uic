@@ -1,14 +1,32 @@
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+/**
+ *  @brief MainWindow class file
+ *
+ *  CS 342 - Project 2
+ *  Univeristy of Illinois at Chicago
+ *
+ *  @author Ammar Subei
+*/
 
-public class MainWindow extends JFrame implements ActionListener
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+
+import java.awt.Container;
+import java.awt.BorderLayout;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+/**
+ *  @brief MainWindow class
+*/
+public class MainWindow extends JFrame
 {
   private Container container;
   private JMenuBar menu;
   private Puzzle puzzleGrid;
 
-  // Set up GUI
   public MainWindow()
   {
     super("Puzzle Game" );
@@ -34,14 +52,25 @@ public class MainWindow extends JFrame implements ActionListener
     JMenu fileMenu = new JMenu("File");
     fileMenu.setMnemonic('F');
 
-    JMenuItem shuffleItem = new JMenuItem("Shuffle");
-    shuffleItem.setMnemonic('H');
+    JMenuItem newPuzzleItem = new JMenuItem("New Puzzle");
+    newPuzzleItem.setMnemonic('N');
 
-    shuffleItem.addActionListener(
+    newPuzzleItem.addActionListener(
         new ActionListener() {
           public void actionPerformed(ActionEvent event)
           {
             puzzleGrid.shuffle();
+          }
+        });
+
+    JMenuItem resetItem = new JMenuItem("Reset");
+    resetItem.setMnemonic('R');
+
+    resetItem.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(ActionEvent event)
+          {
+            puzzleGrid.reset();
           }
         });
 
@@ -76,7 +105,8 @@ public class MainWindow extends JFrame implements ActionListener
     JMenuItem licenseItem = new JMenuItem("License");
     licenseItem.setMnemonic('L');
 
-    fileMenu.add(shuffleItem);
+    fileMenu.add(newPuzzleItem);
+    fileMenu.add(resetItem);
     fileMenu.add(solveItem);
     fileMenu.add(exitItem);
     editMenu.add(undoItem);
@@ -90,16 +120,9 @@ public class MainWindow extends JFrame implements ActionListener
     menu.add(helpMenu);
   }
 
-  // handle button events by toggling between layouts
-  public void actionPerformed( ActionEvent event )
-  { 
-    container.validate();
-  }
-
   public static void main( String args[] )
   {
     MainWindow application = new MainWindow();
     application.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
   } 
-
 }

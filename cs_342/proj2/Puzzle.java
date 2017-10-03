@@ -1,5 +1,5 @@
 /**
- *  @brief Puzzle class
+ *  @brief Puzzle class file
  *
  *  CS 342 - Project 2
  *  Univeristy of Illinois at Chicago
@@ -7,13 +7,19 @@
  *  @author Ammar Subei
 */
 
+import java.util.List;
 import java.util.Arrays;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+
+import javax.swing.JToggleButton;
+import javax.swing.ButtonGroup;
+import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
 
 /**
  *  @brief Puzzle class
@@ -88,7 +94,6 @@ public class Puzzle extends JPanel
     int buttonPosition = buttons.indexOf(pressedButton);
     int diff = buttonPosition - emptyPosition;
 
-    // TODO: handle edge (literally) cases. Use if-statements
     switch(diff) {
       case 1:
         if ( (emptyPosition % 4) == 3 ) // if empty is on last column
@@ -124,9 +129,22 @@ public class Puzzle extends JPanel
 
     updatePieces(buttonValues);
     redraw();
+
+    checkIfWon();
+  }
+
+  private void checkIfWon()
+  {
+    String winSequence = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
+
+    if (puzzlePieces.equals(winSequence)) {
+      JOptionPane.showMessageDialog( this,
+          "You just solved the puzzle! YOU WIN!",
+          "Noice!", JOptionPane.PLAIN_MESSAGE );
+    }
   }
   
-  void updatePieces(ArrayList<String> values)
+  private void updatePieces(ArrayList<String> values)
   {
     String newPieces = new String("");
 
@@ -152,7 +170,9 @@ public class Puzzle extends JPanel
 
   public void shuffle()
   {
-    puzzlePieces = new String("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16");
+    puzzlePieces = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
+
+    // Using temp string to exclude the last element "16" from being shuffled
     String temp = puzzlePieces.substring(0, puzzlePieces.lastIndexOf(" "));
     ArrayList<String> values = new ArrayList<>( Arrays.asList(temp.split(" ")) );
 
@@ -164,6 +184,16 @@ public class Puzzle extends JPanel
     values.add("16");
     updatePieces(values);
 
+    // Always set the last piece to be "empty"
+    buttons.get(15).setSelected(true);
+    redraw();
+  }
+
+  public void reset()
+  {
+    puzzlePieces = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
+
+    // Always set the last piece to be "empty"
     buttons.get(15).setSelected(true);
     redraw();
   }
