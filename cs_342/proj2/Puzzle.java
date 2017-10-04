@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Collections;
-//import java.util.concurrent.TimeUnit;
 
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
@@ -38,8 +37,8 @@ public class Puzzle extends JPanel
   private ArrayList<JToggleButton> pieces;  ///< Array of buttons as the puzzle pieces
   private Stack<Integer> undoStack;         ///< Stack for undo command
   private String values;                    ///< String representation of puzzle pieces
-  public int complexity;                    ///< Integer value for puzzle complexity
-  public int moves;                         ///< Integer value for move count
+  public ObservableValue complexity;        ///< Observable value for puzzle complexity
+  public ObservableValue moves;             ///< Observable value for move count
 
   /**
    *  @brief Constructor
@@ -52,7 +51,8 @@ public class Puzzle extends JPanel
     values = new String("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16");
     undoStack = new Stack<>();
     initGrid();
-    complexity = 0;
+    complexity = new ObservableValue(0);
+    moves = new ObservableValue(0);
   }
 
   /**
@@ -100,6 +100,9 @@ public class Puzzle extends JPanel
       if ( canMove(pressedButton) ) {
         undoStack.push(getEmptyPosition());
         moveToEmptySpot(pressedButton);
+        moves.setValue(moves.getValue() + 1);
+
+        checkIfWon();
       }
     }
   } // end of inner private class
@@ -176,8 +179,6 @@ public class Puzzle extends JPanel
 
     updatePieces(newValues);
     redraw();
-
-    checkIfWon();
   }
 
   /**
@@ -192,6 +193,7 @@ public class Puzzle extends JPanel
           "You just solved the puzzle! YOU WIN!",
           "Noice!", JOptionPane.PLAIN_MESSAGE );
 
+      moves.setValue(0);
       undoStack.clear();
     }
   }
@@ -251,6 +253,8 @@ public class Puzzle extends JPanel
 
     // Always set the last piece to be "empty"
     pieces.get(15).setSelected(true);
+
+    moves.setValue(0);
     redraw();
   }
 
@@ -261,6 +265,8 @@ public class Puzzle extends JPanel
   {
     values = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
 
+    complexity.setValue(0);
+    moves.setValue(0);
     undoStack.clear();
 
     // Always set the last piece to be "empty"
@@ -306,7 +312,7 @@ public class Puzzle extends JPanel
       values.remove(maxValueIndex);
     }
 
-    complexity = inversionCount;    
+    complexity.setValue(inversionCount);
     return inversionCount;
   }
 
@@ -315,10 +321,12 @@ public class Puzzle extends JPanel
   */
   public void undo()
   {
-    if (!undoStack.empty())
+    if (!undoStack.empty()) {
       moveToEmptySpot( pieces.get(undoStack.pop()) );
-    else
+      moves.setValue(moves.getValue() - 1);
+    } else {
       System.out.println("Undo stack is empty!");
+    }
   }
 
   /**

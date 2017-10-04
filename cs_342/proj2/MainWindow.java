@@ -19,13 +19,16 @@ import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 
+import java.util.Observer;
+import java.util.Observable;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
  *  @brief MainWindow class
 */
-public class MainWindow extends JFrame
+public class MainWindow extends JFrame implements Observer
 {
   private Container container;    ///< Java container object
   private JMenuBar menu;          ///< Menu bar object
@@ -33,11 +36,19 @@ public class MainWindow extends JFrame
   private JLabel complexityLabel; ///< Text label for puzzle complexity
   private JLabel moveCountLabel;  ///< Text label for user move count
 
+  @Override
+  public void update(Observable o, Object arg)
+  {
+    complexityLabel.setText( String.valueOf(puzzleGrid.complexity.getValue()) );
+    moveCountLabel.setText( String.valueOf(puzzleGrid.moves.getValue()) );
+  }
+
   /**
    *  @brief Constructor
    *
    *  First initializes the menu bar with all its items
-   *  and action listeners. Then sets up the puzzle grid.
+   *  and action listeners. Then sets up the UI labels and
+   *  the puzzle grid.
   */
   public MainWindow()
   {
@@ -56,6 +67,8 @@ public class MainWindow extends JFrame
     labelsPanel.add(moveCountLabel);
 
     puzzleGrid = new Puzzle();
+    puzzleGrid.complexity.addObserver(this);
+    puzzleGrid.moves.addObserver(this);
 
     // Get content pane and set its layout
     container = getContentPane();
