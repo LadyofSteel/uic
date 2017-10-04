@@ -10,9 +10,13 @@
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JMenu;
 
 import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 
 import java.awt.event.ActionListener;
@@ -23,9 +27,11 @@ import java.awt.event.ActionEvent;
 */
 public class MainWindow extends JFrame
 {
-  private Container container;  ///< Java container object
-  private JMenuBar menu;        ///< Menu bar object
-  private Puzzle puzzleGrid;    ///< Puzzle grid object
+  private Container container;    ///< Java container object
+  private JMenuBar menu;          ///< Menu bar object
+  private Puzzle puzzleGrid;      ///< Puzzle grid object
+  private JLabel complexityLabel; ///< Text label for puzzle complexity
+  private JLabel moveCountLabel;  ///< Text label for user move count
 
   /**
    *  @brief Constructor
@@ -38,6 +44,17 @@ public class MainWindow extends JFrame
     super("Puzzle Game" );
     initMenuBar();
 
+    JPanel labelsPanel = new JPanel(new FlowLayout());
+    JLabel label1 = new JLabel("Puzzle complexity:");
+    JLabel label2 = new JLabel("Move count:");
+    complexityLabel = new JLabel("0");
+    moveCountLabel = new JLabel("0");
+
+    labelsPanel.add(label1);
+    labelsPanel.add(complexityLabel);
+    labelsPanel.add(label2);
+    labelsPanel.add(moveCountLabel);
+
     puzzleGrid = new Puzzle();
 
     // Get content pane and set its layout
@@ -45,6 +62,7 @@ public class MainWindow extends JFrame
     container.setLayout( new BorderLayout() );
     this.setJMenuBar(menu);
 
+    container.add( labelsPanel, BorderLayout.PAGE_START );
     container.add( puzzleGrid, BorderLayout.CENTER );
 
     setSize(400,400);
@@ -110,7 +128,7 @@ public class MainWindow extends JFrame
 
     JMenuItem undoAllItem = new JMenuItem("Undo All");
     undoAllItem.setMnemonic('A');
-    undoItem.addActionListener(
+    undoAllItem.addActionListener(
         new ActionListener() {
           public void actionPerformed(ActionEvent event)
           {
@@ -123,10 +141,27 @@ public class MainWindow extends JFrame
 
     JMenuItem instructionsItem = new JMenuItem("Instructions");
     instructionsItem.setMnemonic('I');
+    instructionsItem.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(ActionEvent event)
+          {
+            JOptionPane.showMessageDialog( MainWindow.this,
+                "TODO: instructions here",
+                "Instructions", JOptionPane.PLAIN_MESSAGE );
+          }
+        });
+
     JMenuItem aboutItem = new JMenuItem("About...");
     aboutItem.setMnemonic('A');
-    JMenuItem licenseItem = new JMenuItem("License");
-    licenseItem.setMnemonic('L');
+    aboutItem.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(ActionEvent event)
+          {
+            JOptionPane.showMessageDialog( MainWindow.this,
+                "TODO: about stuff here",
+                "About", JOptionPane.PLAIN_MESSAGE );
+          }
+        });
 
     fileMenu.add(newPuzzleItem);
     fileMenu.add(resetItem);
@@ -136,7 +171,6 @@ public class MainWindow extends JFrame
     editMenu.add(undoAllItem);
     helpMenu.add(instructionsItem);
     helpMenu.add(aboutItem);
-    helpMenu.add(licenseItem);
 
     menu.add(fileMenu);
     menu.add(editMenu);

@@ -9,8 +9,10 @@
 
 import java.util.List;
 import java.util.Stack;
+import java.util.Timer;
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.TimerTask;
 import java.util.Collections;
 //import java.util.concurrent.TimeUnit;
 
@@ -36,6 +38,8 @@ public class Puzzle extends JPanel
   private ArrayList<JToggleButton> pieces;  ///< Array of buttons as the puzzle pieces
   private Stack<Integer> undoStack;         ///< Stack for undo command
   private String values;                    ///< String representation of puzzle pieces
+  public int complexity;                    ///< Integer value for puzzle complexity
+  public int moves;                         ///< Integer value for move count
 
   /**
    *  @brief Constructor
@@ -48,6 +52,7 @@ public class Puzzle extends JPanel
     values = new String("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16");
     undoStack = new Stack<>();
     initGrid();
+    complexity = 0;
   }
 
   /**
@@ -300,7 +305,8 @@ public class Puzzle extends JPanel
       inversionCount += (values.size() - 1) - maxValueIndex;
       values.remove(maxValueIndex);
     }
-    
+
+    complexity = inversionCount;    
     return inversionCount;
   }
 
@@ -320,11 +326,19 @@ public class Puzzle extends JPanel
   */
   public void undoAll()
   {
-    // TODO: properly implement "animation" with some timer
-    while (!undoStack.empty()) {
-      moveToEmptySpot( pieces.get(undoStack.pop()) );
-    }
+    TimerTask timerTask = new TimerTask() {
+      @Override
+      public void run()
+      {
+        if (!undoStack.empty()) {
+          undo();
+        } else {
+          this.cancel();
+        }
+      }
+    };
 
-    System.out.println("Reached the end");
+    Timer timer = new Timer(true);
+    timer.scheduleAtFixedRate(timerTask, 0, 800);
   }
 }
