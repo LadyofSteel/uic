@@ -8,9 +8,11 @@
 */
 
 import java.util.List;
+import java.util.Stack;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
+//import java.util.concurrent.TimeUnit;
 
 import javax.swing.JToggleButton;
 import javax.swing.ButtonGroup;
@@ -31,33 +33,45 @@ import java.awt.event.ActionEvent;
 */
 public class Puzzle extends JPanel
 {
-  private ArrayList<JToggleButton> buttons;
-  private String puzzlePieces;
+  private ArrayList<JToggleButton> pieces;  ///< Array of buttons as the puzzle pieces
+  private Stack<Integer> undoStack;         ///< Stack for undo command
+  private String values;                    ///< String representation of puzzle pieces
 
+  /**
+   *  @brief Constructor
+   *
+   *  Initializes the pieces in ascending order and sets up a grid layout.
+  */
   public Puzzle()
   {
     super( new GridLayout(4,4) );
-    puzzlePieces = new String("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16");
+    values = new String("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16");
+    undoStack = new Stack<>();
     initGrid();
   }
 
+  /**
+   *  @brief Initializes the grid
+   *
+   *  Initializes the grid layout with toggle buttons as the puzzle pieces.
+  */
   private void initGrid()
   {
     ButtonGroup toggleGroup = new ButtonGroup();
-    buttons = new ArrayList<JToggleButton>(16);
-    List<String> buttonTexts = Arrays.asList( puzzlePieces.split(" ") );
+    pieces = new ArrayList<JToggleButton>(16);
+    List<String> buttonTexts = Arrays.asList( values.split(" ") );
 
     for (int i = 0; i < buttonTexts.size(); i++) {
       if ( buttonTexts.get(i).equals("16") )
-        buttons.add(new JToggleButton(""));
+        pieces.add(new JToggleButton(""));
       else
-        buttons.add(new JToggleButton(buttonTexts.get(i)));
+        pieces.add(new JToggleButton(buttonTexts.get(i)));
 
-      buttons.get(i).addActionListener(new ButtonAction());
+      pieces.get(i).addActionListener(new ButtonAction());
 
-      toggleGroup.add( buttons.get(i) );
-      this.add( buttons.get(i) );
-      buttons.get(i).setSelected(true);
+      toggleGroup.add( pieces.get(i) );
+      this.add( pieces.get(i) );
+      pieces.get(i).setSelected(true);
     }
   }
 
@@ -71,28 +85,46 @@ public class Puzzle extends JPanel
   */
   private class ButtonAction extends AbstractAction
   {
-    public ButtonAction()
-    {
-      super();
-    }
-        
+    public ButtonAction() { super(); }
+
     @Override
     public void actionPerformed(ActionEvent event)
     {
       JToggleButton pressedButton = (JToggleButton) event.getSource();
 
-      if ( canMove(pressedButton) )
+      if ( canMove(pressedButton) ) {
+        undoStack.push(getEmptyPosition());
         moveToEmptySpot(pressedButton);
+      }
     }
   } // end of inner private class
 
-  private boolean canMove(JToggleButton pressedButton)
+  /**
+   *  @brief Gets the position of the empty piece
+   *
+   *  @return integer index of empty piece
+  */
+  private int getEmptyPosition()
   {
-    List<String> buttonTexts = Arrays.asList( puzzlePieces.split(" ") );
-
+    List<String> buttonTexts = Arrays.asList( values.split(" ") );
     int emptyPosition = buttonTexts.indexOf("16");
-    int buttonPosition = buttons.indexOf(pressedButton);
-    int diff = buttonPosition - emptyPosition;
+
+    return emptyPosition;
+  }
+
+  /**
+   *  @brief Checks if selected piece can move
+   *
+   *  The indexes of the pieces are [0, 1, ... , 15] in a 4x4 grid.
+   *
+   *  @param JToggleButton the selected piece
+   *  @return boolean if selected piece can move
+  */
+  private boolean canMove(JToggleButton selectedPiece)
+  {
+    int emptyPosition = getEmptyPosition();
+    int selectedPosition = pieces.indexOf(selectedPiece);
+    int diff = selectedPosition - emptyPosition;
 
     switch(diff) {
       case 1:
@@ -111,93 +143,132 @@ public class Puzzle extends JPanel
         break;
     }
 
-    buttons.get(emptyPosition).setSelected(true);
+    pieces.get(emptyPosition).setSelected(true);
     return false;
   }
 
-  private void moveToEmptySpot(JToggleButton pressedButton)
+  /**
+   *  @brief Moves the selected piece to the empty spot
+   *
+   *  The pieces don't really "move", per se, but their texts switch and
+   *  the selected button is toggled to create the "move" effect.
+   *
+   *  @param JToggleButton the selected piece
+  */
+  private void moveToEmptySpot(JToggleButton selectedPiece)
   {
-    ArrayList<String> buttonValues = new ArrayList<>(Arrays.asList( puzzlePieces.split(" ") ));
+    ArrayList<String> newValues = new ArrayList<>(Arrays.asList( values.split(" ") ));
 
-    int emptyPosition = buttonValues.indexOf("16");
-    int buttonPosition = buttons.indexOf(pressedButton);
+    int emptyPosition = newValues.indexOf("16");
+    int selectedPosition = pieces.indexOf(selectedPiece);
 
-    String buttonText = pressedButton.getText();
+    String selectedText = selectedPiece.getText();
 
-    buttonValues.set(emptyPosition, buttonText);
-    buttonValues.set(buttonPosition, "16");
+    newValues.set(emptyPosition, selectedText);
+    newValues.set(selectedPosition, "16");
 
-    updatePieces(buttonValues);
+    pieces.get(selectedPosition).setSelected(true);
+
+    updatePieces(newValues);
     redraw();
 
     checkIfWon();
   }
 
+  /**
+   *  @brief Checks if the pieces are in correct sequence
+  */
   private void checkIfWon()
   {
     String winSequence = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
 
-    if (puzzlePieces.equals(winSequence)) {
+    if (values.equals(winSequence)) {
       JOptionPane.showMessageDialog( this,
           "You just solved the puzzle! YOU WIN!",
           "Noice!", JOptionPane.PLAIN_MESSAGE );
+
+      undoStack.clear();
     }
   }
   
-  private void updatePieces(ArrayList<String> values)
+  /**
+   *  @brief Updates the pieces to the new given values
+   *
+   *  @param ArrayList<String> array of new values
+  */
+  private void updatePieces(ArrayList<String> newValues)
   {
     String newPieces = new String("");
 
-    for (String value : values) {
+    for (String value : newValues) {
       newPieces = newPieces.concat(value);
       newPieces = newPieces.concat(" ");
     }
 
-    puzzlePieces = newPieces.trim();
+    values = newPieces.trim();
   }
 
+  /**
+   *  @brief Redraws the grid with the new piece arrangement
+  */
   public void redraw()
   {
-    List<String> buttonTexts = Arrays.asList(puzzlePieces.split(" "));
+    List<String> buttonTexts = Arrays.asList(values.split(" "));
 
-    for (int i = 0; i < buttons.size(); i++) {
+    for (int i = 0; i < pieces.size(); i++) {
       if ( buttonTexts.get(i).equals("16") )
-        buttons.get(i).setText("");
+        pieces.get(i).setText("");
       else
-        buttons.get(i).setText(buttonTexts.get(i));
+        pieces.get(i).setText(buttonTexts.get(i));
     }
   }
 
+  /**
+   *  @brief Shuffles the pieces to create new puzzle
+  */
   public void shuffle()
   {
-    puzzlePieces = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
+    values = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
 
     // Using temp string to exclude the last element "16" from being shuffled
-    String temp = puzzlePieces.substring(0, puzzlePieces.lastIndexOf(" "));
-    ArrayList<String> values = new ArrayList<>( Arrays.asList(temp.split(" ")) );
+    String temp = values.substring(0, values.lastIndexOf(" "));
+    ArrayList<String> newValues = new ArrayList<>( Arrays.asList(temp.split(" ")) );
 
-    Collections.shuffle(values);
+    Collections.shuffle(newValues);
 
-    while (!isSolvable(values))
-      Collections.shuffle(values);
+    while (!isSolvable(newValues))
+      Collections.shuffle(newValues);
 
-    values.add("16");
-    updatePieces(values);
+    newValues.add("16");
+    updatePieces(newValues);
+
+    undoStack.clear();
 
     // Always set the last piece to be "empty"
-    buttons.get(15).setSelected(true);
+    pieces.get(15).setSelected(true);
     redraw();
   }
 
+  /**
+   *  @brief Resets the pieces to the corrent arrangement
+  */
   public void reset()
   {
-    puzzlePieces = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
+    values = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
+
+    undoStack.clear();
 
     // Always set the last piece to be "empty"
-    buttons.get(15).setSelected(true);
+    pieces.get(15).setSelected(true);
     redraw();
   }
 
+  /**
+   *  @brief Checks if the current puzzle arrangement is solvable
+   *
+   *  @param List<String> list of piece values
+   *  @return boolean if puzzle is solvable
+  */
   private boolean isSolvable(List<String> values)
   {
     int inversionCount = getInversionCount(new ArrayList<String>(values));
@@ -210,6 +281,12 @@ public class Puzzle extends JPanel
       return false;
   }
 
+  /**
+   *  @brief Gets the inversion count for current puzzle arrangement
+   *
+   *  @param List<String> list of piece values
+   *  @return int inversion count
+  */
   private int getInversionCount(List<String> values)
   {
     int inversionCount = 0;
@@ -225,5 +302,29 @@ public class Puzzle extends JPanel
     }
     
     return inversionCount;
+  }
+
+  /**
+   *  @brief Undo last move
+  */
+  public void undo()
+  {
+    if (!undoStack.empty())
+      moveToEmptySpot( pieces.get(undoStack.pop()) );
+    else
+      System.out.println("Undo stack is empty!");
+  }
+
+  /**
+   *  @brief Undo all moves
+  */
+  public void undoAll()
+  {
+    // TODO: properly implement "animation" with some timer
+    while (!undoStack.empty()) {
+      moveToEmptySpot( pieces.get(undoStack.pop()) );
+    }
+
+    System.out.println("Reached the end");
   }
 }

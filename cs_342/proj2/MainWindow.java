@@ -23,10 +23,16 @@ import java.awt.event.ActionEvent;
 */
 public class MainWindow extends JFrame
 {
-  private Container container;
-  private JMenuBar menu;
-  private Puzzle puzzleGrid;
+  private Container container;  ///< Java container object
+  private JMenuBar menu;        ///< Menu bar object
+  private Puzzle puzzleGrid;    ///< Puzzle grid object
 
+  /**
+   *  @brief Constructor
+   *
+   *  First initializes the menu bar with all its items
+   *  and action listeners. Then sets up the puzzle grid.
+  */
   public MainWindow()
   {
     super("Puzzle Game" );
@@ -45,6 +51,11 @@ public class MainWindow extends JFrame
     setVisible(true);
   }
 
+  /**
+   *  @brief Initializes menu bar
+   *
+   *  Adds all necessary menubar items and their action listeners.
+  */
   private void initMenuBar()
   {
     menu = new JMenuBar();
@@ -54,7 +65,6 @@ public class MainWindow extends JFrame
 
     JMenuItem newPuzzleItem = new JMenuItem("New Puzzle");
     newPuzzleItem.setMnemonic('N');
-
     newPuzzleItem.addActionListener(
         new ActionListener() {
           public void actionPerformed(ActionEvent event)
@@ -65,7 +75,6 @@ public class MainWindow extends JFrame
 
     JMenuItem resetItem = new JMenuItem("Reset");
     resetItem.setMnemonic('R');
-
     resetItem.addActionListener(
         new ActionListener() {
           public void actionPerformed(ActionEvent event)
@@ -78,7 +87,6 @@ public class MainWindow extends JFrame
     solveItem.setMnemonic('S');
     JMenuItem exitItem = new JMenuItem("Exit");
     exitItem.setMnemonic('E');
-
     exitItem.addActionListener(
         new ActionListener() {
           public void actionPerformed(ActionEvent event)
@@ -92,8 +100,23 @@ public class MainWindow extends JFrame
 
     JMenuItem undoItem = new JMenuItem("Undo");
     undoItem.setMnemonic('U');
+    undoItem.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(ActionEvent event)
+          {
+            puzzleGrid.undo();
+          }
+        });
+
     JMenuItem undoAllItem = new JMenuItem("Undo All");
     undoAllItem.setMnemonic('A');
+    undoItem.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(ActionEvent event)
+          {
+            puzzleGrid.undoAll();
+          }
+        });
 
     JMenu helpMenu = new JMenu("Help");
     helpMenu.setMnemonic('H');
@@ -120,6 +143,9 @@ public class MainWindow extends JFrame
     menu.add(helpMenu);
   }
 
+  /**
+   *  @brief Main function
+  */
   public static void main( String args[] )
   {
     MainWindow application = new MainWindow();
