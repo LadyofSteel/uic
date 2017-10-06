@@ -11,3 +11,4 @@ For any existing unit tests (using JUnit4), you can enter `make tests` to build 
 To clean up, enter `make clean`.
 
 #### Notes
+Most of the information and instructions can be found in the "Help" menu item.

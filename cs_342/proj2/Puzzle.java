@@ -37,6 +37,7 @@ public class Puzzle extends JPanel
   private ArrayList<JToggleButton> pieces;  ///< Array of buttons as the puzzle pieces
   private Stack<Integer> undoStack;         ///< Stack for undo command
   private String values;                    ///< String representation of puzzle pieces
+  private Solver solver;                    ///< Solver object for auto-solve
   public ObservableValue complexity;        ///< Observable value for puzzle complexity
   public ObservableValue moves;             ///< Observable value for move count
 
@@ -50,6 +51,7 @@ public class Puzzle extends JPanel
     super( new GridLayout(4,4) );
     values = new String("1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16");
     undoStack = new Stack<>();
+    solver = new Solver();
     initGrid();
     complexity = new ObservableValue(0);
     moves = new ObservableValue(0);
@@ -233,7 +235,7 @@ public class Puzzle extends JPanel
   /**
    *  @brief Shuffles the pieces to create new puzzle
   */
-  public void shuffle()
+  public void newPuzzle()
   {
     values = "1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
 
@@ -283,8 +285,6 @@ public class Puzzle extends JPanel
   private boolean isSolvable(List<String> values)
   {
     int inversionCount = getInversionCount(new ArrayList<String>(values));
-
-    System.out.println(inversionCount);
 
     if ( (inversionCount & 1) == 0 )
       return true;
@@ -347,6 +347,32 @@ public class Puzzle extends JPanel
     };
 
     Timer timer = new Timer(true);
-    timer.scheduleAtFixedRate(timerTask, 0, 800);
+    timer.scheduleAtFixedRate(timerTask, 0, 300);
   }
+
+  /**
+   *  @brief Auto-solves the current puzzle
+  */
+  public void solve()
+  {
+    // First check if solution is found
+    if (solver.solve(values)) {
+      TimerTask timerTask = new TimerTask() {
+        @Override
+        public void run()
+        {
+          if (!solver.movementStack.empty()) {
+            int moveIndex = solver.movementStack.pop();
+            moveToEmptySpot(pieces.get(moveIndex));
+          } else {
+            this.cancel();
+          }
+        }
+      };
+
+      Timer timer = new Timer(true);
+      timer.scheduleAtFixedRate(timerTask, 0, 300);
+    }
+  }
+
 }

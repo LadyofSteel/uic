@@ -100,7 +100,7 @@ public class MainWindow extends JFrame implements Observer
         new ActionListener() {
           public void actionPerformed(ActionEvent event)
           {
-            puzzleGrid.shuffle();
+            puzzleGrid.newPuzzle();
           }
         });
 
@@ -116,6 +116,14 @@ public class MainWindow extends JFrame implements Observer
 
     JMenuItem solveItem = new JMenuItem("Solve");
     solveItem.setMnemonic('S');
+    solveItem.addActionListener(
+        new ActionListener() {
+          public void actionPerformed(ActionEvent event)
+          {
+            puzzleGrid.solve();
+          }
+        });
+
     JMenuItem exitItem = new JMenuItem("Exit");
     exitItem.setMnemonic('E');
     exitItem.addActionListener(
@@ -159,7 +167,12 @@ public class MainWindow extends JFrame implements Observer
           public void actionPerformed(ActionEvent event)
           {
             JOptionPane.showMessageDialog( MainWindow.this,
-                "TODO: instructions here",
+                "Click on a valid adjacent puzzle piece (button) to move it to the empty position.\n"
+                +"To create a new puzzle (shuffle), click on File->New Puzzle.\n"
+                +"To reset the puzzle to the original state, click on File->Reset.\n"
+                +"To undo a move, click on Edit->Undo.\n"
+                +"To undo all previous moves, click on Edit->Undo All.\n"
+                +"To auto-solve the current puzzle, click on File->Solve.",
                 "Instructions", JOptionPane.PLAIN_MESSAGE );
           }
         });
@@ -171,7 +184,11 @@ public class MainWindow extends JFrame implements Observer
           public void actionPerformed(ActionEvent event)
           {
             JOptionPane.showMessageDialog( MainWindow.this,
-                "TODO: about stuff here",
+                "Heyo! This is the CS 342 15-Puzzle project submission by Ammar Subei (NetID: asubei2).\n"
+                +"The project is mainly divided into two parts: the MainWindow and the Puzzle.\n"
+                +"MainWindow handles everything besides the puzzle, like the menubar and layout.\n"
+                +"Puzzle handles everything related to the puzzle, including the grid GUI.\n"
+                +"This program has auto-solve implemented, but with poor documentation and commenting.",
                 "About", JOptionPane.PLAIN_MESSAGE );
           }
         });
