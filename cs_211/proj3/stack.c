@@ -45,8 +45,8 @@ void printStack(const Stack *stack)
   printf("Printing stack elements\n\n");
 
   while (current != NULL) {
-    printf("Position : (%d,%d) -- visited : %d\n",
-        current->x_pos, current->y_pos, current->is_visited);
+    printf("Position : (%d,%d)\n",
+        current->x_pos, current->y_pos);
 
     current = current->next;
   }
@@ -58,7 +58,6 @@ void printStack(const Stack *stack)
 void push(Stack *stack, const int x, const int y)
 {
   StackNode *newNode = (StackNode *) malloc( sizeof(StackNode) );
-  newNode->is_visited = false;
   newNode->x_pos = x;
   newNode->y_pos = y;
   newNode->next = stack->head;

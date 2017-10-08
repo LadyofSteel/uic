@@ -20,11 +20,8 @@ typedef enum
 */
 typedef struct StackNode
 {
-  bool is_visited;        //!< Boolean if node is visited
-
   int x_pos;              //!< Integer value for x position
   int y_pos;              //!< Integer value for y position
-
   struct StackNode *next; //!< Pointer to the next StackNode object
 } StackNode;
 

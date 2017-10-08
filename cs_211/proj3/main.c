@@ -1,95 +1,114 @@
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #include "maze.h"
 #include "stack.h"
 
+bool is_debug = false;
+
 /* verify the proper number of command line arguments were given */
-bool validateInput(int arg_count, char **args, FILE *file)
+bool validateInput(int arg_count, char **args, FILE **file)
 {
   if (arg_count < 2) {  // No input arguments
-    fprintf(stderr, "Usage: %s <input file name>\n", args[0]);
+    fprintf(stderr, "Invalid input! Correct usage: %s <input file name>\n", args[0]);
     return false;
-  } else if(arg_count == 2) {  // Only '-d' flag input
-    if ( !strcmp(args[1], "-d") ) {
-      fprintf(stderr, "Usage: %s <input file name>\n", args[0]);
+  } else if (arg_count == 2) {
+    if ( !strcmp(args[1], "-d") ) { // Only '-d' flag input
+      fprintf(stderr, "Invalid input! Correct usage: %s <input file name>\n", args[0]);
       return false;
     }
 
-    file = fopen(args[1], "r");
-  } else if(arg_count == 3) {  // Only '-d' flag input
-  } else {
+    *file = fopen(args[1], "r");
+    if (*file == NULL) {
+      fprintf (stderr, "ERROR: Cannot open input file: %s", args[1] );
+      return false;
+    }
+  } else if(arg_count == 3) {  // Input file and '-d' flag
+    // Must correctly read input file
+    if ( !strcmp(args[1], "-d") ) {
+      is_debug = true;
+      *file = fopen(args[2], "r");
+    } else if ( !strcmp(args[2], "-d") ) {
+      is_debug = true;
+      *file = fopen(args[1], "r");
+    }
+
+    if (*file == NULL) {
+      fprintf (stderr, "ERROR: Cannot open input file.");
+      return false;
+    }
+  } else {  // Too many arguments
       fprintf(stderr, "Too many arguments given. Aborting...");
       return false;
   }
 
-  file = fopen(args[1], "r");
-
-  /* Try to open the input file. */
-  if (file == NULL) {
-    fprintf (stderr, "ERROR: Can't open input file: %s", args[1] );
-    return false;
-  }
-
   return true;
+}
+
+void readInput(FILE *file, Maze *maze)
+{
+  // Read maze size
+  int rows = 0;
+  int cols = 0;
+  while (rows < 1 || cols < 1) {
+    fscanf(file, "%d %d", &rows, &cols);
+  }
+  initMazeSize(maze, rows, cols);
+
+  // Read start position
+  rows = 0;
+  cols = 0;
+  while (rows < 1 ||
+      cols < 1 ||
+      rows > maze->rows ||
+      cols > maze->columns) {
+    fscanf(file, "%d %d", &rows, &cols);
+  }
+  maze->x_start = rows;
+  maze->y_start = cols;
+
+  // Read end position
+  rows = 0;
+  cols = 0;
+  while (rows < 1 ||
+      cols < 1 ||
+      rows > maze->rows ||
+      cols > maze->columns) {
+    fscanf(file, "%d %d", &rows, &cols);
+  }
+  maze->x_end = rows;
+  maze->y_end = cols;
+
+  initMaze(maze);
+
+  // Mark blocked positions with "*"s
+  rows = 0;
+  cols = 0;
+  while ( fscanf(file, "%d %d", &rows, &cols) != EOF ) {
+      if ((rows >= 1 && cols >= 1) &&
+          (rows != maze->x_start || cols != maze->y_start) &&
+          (rows != maze->x_end || cols != maze->y_end) &&
+          (rows <= maze->rows && cols <= maze->columns)) {
+        maze->data[rows][cols].symbol = '*';
+      }
+  }
 }
 
 int main (int argc, char **argv)
 {
   FILE *src = NULL;
   
-  if (validateInput(argc, argv, src)) {
+  if (!validateInput(argc, argv, &src)) {
     printf("Goodbye!\n");
-    return (-1);
+    return -1;
   }
+
+  if (is_debug)
+    printf("In debug mode!\n");
 
   Maze *m1 = createMaze();
-  initMazeSize(m1, 30, 30);
 
-  int xpos = 0;
-  int ypos = 0;
-
-  int i,j;
-  /* read in the size, starting and ending positions in the maze */
-  fscanf (src, "%d %d", &m1->x_size, &m1->y_size);
-  fscanf (src, "%d %d", &m1->x_start, &m1->y_start);
-  fscanf (src, "%d %d", &m1->x_end, &m1->y_end);
-
-  /* print them out to verify the input */
-  printf ("size: %d, %d\n", m1->x_size, m1->y_size);
-  printf ("start: %d, %d\n", m1->x_start, m1->y_start);
-  printf ("end: %d, %d\n", m1->x_end, m1->y_end);
-
-  /* initialize the maze to empty */
-  for (i = 0; i < m1->x_size+2; i++)
-    for (j = 0; j < m1->y_size+2; j++)
-      m1->data[i][j] = '.';
-
-  /* mark the borders of the maze with *'s */
-  for (i=0; i < m1->x_size+2; i++)
-  {
-    m1->data[i][0] = '*';
-    m1->data[i][m1->y_size+1] = '*';
-  }
-  for (i=0; i < m1->y_size+2; i++)
-  {
-    m1->data[0][i] = '*';
-    m1->data[m1->x_size+1][i] = '*';
-  }
-
-  /* mark the starting and ending positions in the maze */
-  m1->data[m1->x_start][m1->y_start] = 's';
-  m1->data[m1->x_end][m1->y_end] = 'e';
-
-  /* mark the blocked positions in the maze with *'s */
-  while (fscanf (src, "%d %d", &xpos, &ypos) != EOF)
-    m1->data[xpos][ypos] = '*';
-
-  /* print out the initial maze */
-  for (i = 0; i < m1->x_size+2; i++)
-  {
-    for (j = 0; j < m1->y_size+2; j++)
-      printf ("%c", m1->data[i][j]);
-    printf("\n");
-  }
+  readInput(src, m1);
+  printMaze(m1);
 }
-
