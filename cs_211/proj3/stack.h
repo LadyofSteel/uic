@@ -41,6 +41,13 @@ typedef struct Stack
 Stack* createStack();
 
 /**
+ *  @brief Cleans up given stack
+ *
+ *  @param Stack object to clean up
+*/
+void cleanupStack(Stack *stack);
+
+/**
  *  @brief Resets the stack
  *
  *  @param Stack object to reset

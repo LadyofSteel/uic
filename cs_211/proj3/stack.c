@@ -30,7 +30,7 @@ void cleanupStack(Stack *stack)
     free(temp);
   }
 
-  /*free(stack);*/
+  free(stack);
 }
 
 void resetStack(Stack *stack)
@@ -55,7 +55,7 @@ void printStack(const Stack *stack)
     current = current->next;
   }
 
-  printf("Printing stack elements\n\n");
+  printf("Printing solution path coordinates:\n\n");
 
   StackNode *temp_head = temp->head;
   while (temp_head != NULL) {

@@ -21,6 +21,8 @@ typedef struct Maze
 
 Maze* createMaze();
 
+void cleanupMaze(Maze *maze);
+
 void initMazeSize(Maze *maze, const int rows, const int columns);
 
 void initMaze(Maze *maze);

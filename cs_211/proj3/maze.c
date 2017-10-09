@@ -14,6 +14,17 @@ Maze* createMaze()
 
   return new_maze;
 }
+void cleanupMaze(Maze *maze)
+{
+  /*int i;*/
+  /*for (i = 0; i < maze->rows + 2; i++) {*/
+    /*free(maze->data[i]);*/
+  /*}*/
+
+  /*free(maze->data);*/
+  free(maze);
+}
+
 
 void initMazeSize(Maze *maze, const int rows, const int columns)
 {

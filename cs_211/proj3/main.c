@@ -127,9 +127,13 @@ bool getNeighbors(Maze *maze, Stack *stack, const int row, const int col)
       new_col <= maze->columns) {
     if ( !isVisited(maze, new_row, new_col) ) {
       if ( !isBlocked(maze, new_row, new_col) ) {
+        if (is_debug)
+          printf("DEBUG: Pushing (%d,%d) to stack.\n", new_row, new_col);
         push(stack, new_row, new_col);
         markVisited(maze, new_row, new_col);
         has_neighbors = true;
+        
+        return has_neighbors;
       }
     }
   }
@@ -142,9 +146,13 @@ bool getNeighbors(Maze *maze, Stack *stack, const int row, const int col)
       new_col <= maze->columns) {
     if ( !isVisited(maze, new_row, new_col) ) {
       if ( !isBlocked(maze, new_row, new_col) ) {
+        if (is_debug)
+          printf("DEBUG: Pushing (%d,%d) to stack.\n", new_row, new_col);
         push(stack, new_row, new_col);
         markVisited(maze, new_row, new_col);
         has_neighbors = true;
+        
+        return has_neighbors;
       }
     }
   }
@@ -157,9 +165,13 @@ bool getNeighbors(Maze *maze, Stack *stack, const int row, const int col)
       new_col <= maze->columns) {
     if ( !isVisited(maze, new_row, new_col) ) {
       if ( !isBlocked(maze, new_row, new_col) ) {
+        if (is_debug)
+          printf("DEBUG: Pushing (%d,%d) to stack.\n", new_row, new_col);
         push(stack, new_row, new_col);
         markVisited(maze, new_row, new_col);
         has_neighbors = true;
+        
+        return has_neighbors;
       }
     }
   }
@@ -172,9 +184,13 @@ bool getNeighbors(Maze *maze, Stack *stack, const int row, const int col)
       new_col <= maze->columns) {
     if ( !isVisited(maze, new_row, new_col) ) {
       if ( !isBlocked(maze, new_row, new_col) ) {
+        if (is_debug)
+          printf("DEBUG: Pushing (%d,%d) to stack.\n", new_row, new_col);
         push(stack, new_row, new_col);
         markVisited(maze, new_row, new_col);
         has_neighbors = true;
+        
+        return has_neighbors;
       }
     }
   }
@@ -202,6 +218,8 @@ bool solveMaze(Maze *maze, Stack *stack)
     }
 
     if ( !getNeighbors(maze, stack, current_row, current_col) ) {
+      if (is_debug)
+        printf("DEBUG: Popping (%d,%d) from stack.\n", current_row, current_col);
       pop(stack);
     }
   }
@@ -241,5 +259,8 @@ int main (int argc, char **argv)
     printf("Try a different maze next time.\n");
   }
 
+  free(in_file);
+  cleanupStack(my_stack);
+  cleanupMaze(my_maze);
   printf("\nGoodbye!\n");
 }
