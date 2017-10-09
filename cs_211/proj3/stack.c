@@ -11,13 +11,15 @@
 
 #include "stack.h"
 
-void initStack(Stack *stack)
+Stack* createStack()
 {
-  stack = (Stack *) malloc( sizeof(Stack) );
-  stack->head = NULL;
+  Stack *new_stack = (Stack *) malloc( sizeof(Stack) );
+  new_stack->head = NULL;
+
+  return new_stack;
 }
 
-void resetStack(Stack *stack)
+void cleanupStack(Stack *stack)
 {
   StackNode *current = stack->head;
 
@@ -28,7 +30,13 @@ void resetStack(Stack *stack)
     free(temp);
   }
 
-  initStack(stack);
+  /*free(stack);*/
+}
+
+void resetStack(Stack *stack)
+{
+  cleanupStack(stack);
+  stack = createStack();
 }
 
 bool isEmpty(const Stack *stack)
@@ -39,30 +47,36 @@ bool isEmpty(const Stack *stack)
 void printStack(const Stack *stack)
 {
   // Allocated new memory to not alter the original stack
-  StackNode *current = (StackNode *) malloc( sizeof(StackNode) );
-  current = stack->head;
-
-  printf("Printing stack elements\n\n");
+  Stack *temp = createStack();
+  StackNode *current = stack->head;
 
   while (current != NULL) {
-    printf("Position : (%d,%d)\n",
-        current->x_pos, current->y_pos);
-
+    push(temp, current->x_pos, current->y_pos);
     current = current->next;
   }
 
+  printf("Printing stack elements\n\n");
+
+  StackNode *temp_head = temp->head;
+  while (temp_head != NULL) {
+    printf("Position : (%d,%d)\n",
+        temp_head->x_pos, temp_head->y_pos);
+
+    temp_head = temp_head->next;
+  }
+
   // Gotta free to avoid memory leaks
-  free(current);
+  cleanupStack(temp);
 }
 
 void push(Stack *stack, const int x, const int y)
 {
-  StackNode *newNode = (StackNode *) malloc( sizeof(StackNode) );
-  newNode->x_pos = x;
-  newNode->y_pos = y;
-  newNode->next = stack->head;
+  StackNode *new_node = (StackNode *) malloc( sizeof(StackNode) );
+  new_node->x_pos = x;
+  new_node->y_pos = y;
+  new_node->next = stack->head;
 
-  stack->head = newNode;
+  stack->head = new_node;
 }
 
 bool pop(Stack *stack)
@@ -70,10 +84,8 @@ bool pop(Stack *stack)
   if ( isEmpty(stack) )
     return false;
 
-  StackNode *current = stack->head;
-  StackNode *temp = current;
-
-  current = current->next;
+  StackNode *temp = stack->head;
+  stack->head = stack->head->next;
 
   free(temp);
   return true;

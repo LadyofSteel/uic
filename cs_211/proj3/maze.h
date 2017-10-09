@@ -20,8 +20,17 @@ typedef struct Maze
 } Maze;
 
 Maze* createMaze();
+
 void initMazeSize(Maze *maze, const int rows, const int columns);
+
 void initMaze(Maze *maze);
+
+bool isBlocked(const Maze *maze, const int row, const int col);
+
+bool isVisited(const Maze *maze, const int row, const int col);
+
+void markVisited(Maze *maze, const int row, const int col);
+
 void printMaze(const Maze *maze);
 
 #endif /* MAZE_H */

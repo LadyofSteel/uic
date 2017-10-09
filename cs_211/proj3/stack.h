@@ -34,11 +34,11 @@ typedef struct Stack
 } Stack;
 
 /**
- *  @brief Initialize the stack
+ *  @brief Create a new Stack object
  *
- *  @param Stack object to initialize
+ *  @return new Stack object
 */
-void initStack(Stack *stack);
+Stack* createStack();
 
 /**
  *  @brief Resets the stack

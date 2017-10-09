@@ -4,15 +4,15 @@
 
 Maze* createMaze()
 {
-  Maze *newMaze = (Maze *) malloc( sizeof(Maze) );
-  newMaze->rows = 0;
-  newMaze->columns = 0;
-  newMaze->x_start = 0;
-  newMaze->y_start = 0;
-  newMaze->x_end = 0;
-  newMaze->y_end = 0;
+  Maze *new_maze = (Maze *) malloc( sizeof(Maze) );
+  new_maze->rows = 0;
+  new_maze->columns = 0;
+  new_maze->x_start = 0;
+  new_maze->y_start = 0;
+  new_maze->x_end = 0;
+  new_maze->y_end = 0;
 
-  return newMaze;
+  return new_maze;
 }
 
 void initMazeSize(Maze *maze, const int rows, const int columns)
@@ -54,19 +54,34 @@ void initMaze(Maze *maze)
   maze->data[maze->x_end][maze->y_end].symbol = 'e';
 }
 
+bool isBlocked(const Maze *maze, const int row, const int col)
+{
+  return maze->data[row][col].symbol == '*';
+}
+
+bool isVisited(const Maze *maze, const int row, const int col)
+{
+  return maze->data[row][col].is_visited;
+}
+
+void markVisited(Maze *maze, const int row, const int col)
+{
+  maze->data[row][col].is_visited = true;
+}
+
 void printMaze(const Maze *maze)
 {
   // Print maze info
-  printf ("size: %d, %d\n", maze->rows, maze->columns);
-  printf ("start: %d, %d\n", maze->x_start, maze->y_start);
-  printf ("end: %d, %d\n", maze->x_end, maze->y_end);
+  printf("\n");
+  printf("size: %d, %d\n", maze->rows, maze->columns);
+  printf("start: %d, %d\n", maze->x_start, maze->y_start);
+  printf("end: %d, %d\n", maze->x_end, maze->y_end);
 
   // Print out visual maze
   int i, j;
-  for (i = 0; i < maze->rows + 2; i++)
-  {
+  for (i = 0; i < maze->rows + 2; i++) {
     for (j = 0; j < maze->columns + 2; j++)
-      printf ("%c", maze->data[i][j].symbol);
+      printf("%c", maze->data[i][j].symbol);
     printf("\n");
   }
 }

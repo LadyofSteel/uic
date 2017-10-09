@@ -13,7 +13,7 @@ run:
 	./$(TARGET) input1.txt
 
 debug: clean $(TARGET)
-	./$(TARGET) -d
+	./$(TARGET) -d input1.txt
 
 all: clean $(TARGET) run
 
