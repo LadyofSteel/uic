@@ -55,7 +55,7 @@ void printStack(const Stack *stack)
     current = current->next;
   }
 
-  printf("Printing solution path coordinates:\n\n");
+  printf("\nPrinting solution path coordinates:\n");
 
   StackNode *temp_head = temp->head;
   while (temp_head != NULL) {

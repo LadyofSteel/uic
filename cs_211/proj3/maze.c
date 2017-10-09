@@ -16,12 +16,12 @@ Maze* createMaze()
 }
 void cleanupMaze(Maze *maze)
 {
-  /*int i;*/
-  /*for (i = 0; i < maze->rows + 2; i++) {*/
-    /*free(maze->data[i]);*/
-  /*}*/
+  int i;
+  for (i = 0; i < maze->rows + 2; i++) {
+    free(maze->data[i]);
+  }
 
-  /*free(maze->data);*/
+  free(maze->data);
   free(maze);
 }
 
@@ -31,11 +31,11 @@ void initMazeSize(Maze *maze, const int rows, const int columns)
   maze->rows = rows;
   maze->columns = columns;
 
-  maze->data = (MazeData **) malloc( (sizeof(MazeData*) * rows) + 2);
+  maze->data = (MazeData **) malloc( (sizeof(MazeData*) * (rows + 2)));
 
   int i;
   for (i = 0; i < rows + 2; i++)
-    maze->data[i]= (MazeData *) malloc( (sizeof(MazeData) * columns) + 2);
+    maze->data[i]= (MazeData *) malloc( (sizeof(MazeData) * (columns + 2)));
 }
 
 void initMaze(Maze *maze)
@@ -47,6 +47,7 @@ void initMaze(Maze *maze)
   for (i = 0; i < maze->rows + 2; i++) {
     for (j = 0; j < maze->columns + 2; j++) {
       maze->data[i][j].symbol = '.';
+      maze->data[i][j].is_visited = false;
     }
   }
 

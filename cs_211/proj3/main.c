@@ -259,7 +259,7 @@ int main (int argc, char **argv)
     printf("Try a different maze next time.\n");
   }
 
-  free(in_file);
+  fclose(in_file);
   cleanupStack(my_stack);
   cleanupMaze(my_maze);
   printf("\nGoodbye!\n");

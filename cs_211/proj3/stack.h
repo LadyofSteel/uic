@@ -16,7 +16,7 @@ typedef enum
 } bool;
 
 /**
- *  @brief StructNode for each stack element
+ *  @brief StackNode for each stack element
 */
 typedef struct StackNode
 {
