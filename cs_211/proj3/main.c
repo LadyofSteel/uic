@@ -85,7 +85,9 @@ void readFile(FILE *file, Maze *maze)
   while (rows < 1 ||
       cols < 1 ||
       rows > maze->rows ||
-      cols > maze->columns) {
+      cols > maze->columns ||
+      rows == maze->x_start ||
+      cols == maze->y_start) {
     fscanf(file, "%d %d", &rows, &cols);
   }
   maze->x_end = rows;
