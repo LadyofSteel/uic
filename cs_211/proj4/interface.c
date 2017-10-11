@@ -6,7 +6,7 @@
 
 #include "interface.h"
 #include "commands.h"
-#include "queue.h"
+#include "list.h"
 
 /* Clear input until next End of Line Character - \n */
 void clearToEoln()

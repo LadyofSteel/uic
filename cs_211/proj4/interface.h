@@ -1,3 +1,11 @@
+/**
+ *  @brief CS 211 Project 4
+ *
+ *  This file is used to create and use a linked-list
+ *  as a queue object.
+ *
+ *  @author Ammar Subei
+*/
 
 #ifndef INTERFACE_H
 #define INTERFACE_H

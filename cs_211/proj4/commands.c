@@ -2,7 +2,7 @@
 
 void doAdd()
 {
-  /* get group size from input */
+  // Get group size from input
   int size = getPosInt();
   if (size < 1) {
     printf ("Error: Add command requires an integer value of at least 1\n");
@@ -12,7 +12,7 @@ void doAdd()
     return;
   }
 
-  /* get group name from input */
+  // Get group name from input
   char *name = getName();
   if (name == NULL) {
     printf ("Error: Add command requires a name to be given\n");
@@ -30,7 +30,7 @@ void doAdd()
 
 void doCallAhead()
 {
-  /* get group size from input */
+  // Get group size from input
   int size = getPosInt();
   if (size < 1) {
     printf ("Error: Call-ahead command requires an integer value of at least 1\n");
@@ -40,7 +40,7 @@ void doCallAhead()
     return;
   }
 
-  /* get group name from input */
+  // Get group name from input
   char *name = getName();
   if (name == NULL)
   {
@@ -58,7 +58,7 @@ void doCallAhead()
 
 void doWaiting()
 {
-  /* get group name from input */
+  // Get group name from input
   char *name = getName();
   if (name == NULL) {
     printf ("Error: Waiting command requires a name to be given\n");
@@ -74,7 +74,7 @@ void doWaiting()
 
 void doRetrieve()
 {
-  /* get table size from input */
+  // Get table size from input
   int size = getPosInt();
   if (size < 1) {
     printf ("Error: Retrieve command requires an integer value of at least 1\n");
@@ -91,7 +91,7 @@ void doRetrieve()
 
 void doList()
 {
-  /* get group name from input */
+  // Get group name from input
   char *name = getName();
   if (name == NULL) {
     printf ("Error: List command requires a name to be given\n");

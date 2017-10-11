@@ -1,8 +1,7 @@
 /**
  *  @brief CS 211 Project 4
  *
- *  This file is used to create and use a linked-list
- *  as a queue object.
+ *  This file is used for the commands.
  *
  *  @author Ammar Subei
 */
@@ -10,18 +9,36 @@
 #ifndef COMMANDS_H
 #define COMMANDS_H
 
-#include "queue.h"
+#include "list.h"
 
-void doAdd ();
+/**
+ *  @brief Adds new group
+*/
+void doAdd();
 
-void doCallAhead ();
+/**
+ *  @brief Sets new group as call-ahead
+*/
+void doCallAhead();
 
-void doWaiting ();
+/**
+ *  @brief Sets call-ahead group to waiting
+*/
+void doWaiting();
 
-void doRetrieve ();
+/**
+ *  @brief Removes the first group from the waiting list
+*/
+void doRetrieve();
 
-void doList ();
+/**
+ *  @brief Lists all groups after given group
+*/
+void doList();
 
-void doDisplay ();
+/**
+ *  @brief Displays all groups on the waiting list
+*/
+void doDisplay();
 
 #endif /* COMMANDS_H */
