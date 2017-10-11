@@ -1,3 +1,11 @@
+/**
+ *  @brief CS 211 Project 4
+ *
+ *  This file implements the commands.
+ *
+ *  @author Ammar Subei
+*/
+
 #include "interface.h"
 
 void doAdd()

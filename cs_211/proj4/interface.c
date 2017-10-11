@@ -1,7 +1,10 @@
-/*  Code for the user interface
-*
-*  Author: Pat Troy
-*  Date: 10/6/2013
+/**
+ *  @brief CS 211 Project 4
+ *
+ *  This file implements the linked-list for the waiting list.
+ *
+ *  @author Patrick Troy
+ *  @author Ammar Subei
 */
 
 #include "interface.h"

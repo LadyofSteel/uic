@@ -1,8 +1,7 @@
 /**
  *  @brief CS 211 Project 4
  *
- *  This file is used to create and use a linked-list
- *  as a queue object.
+ *  This file is used to define the interface functions.
  *
  *  @author Ammar Subei
 */
@@ -14,12 +13,6 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
-
-typedef enum
-{
-  false,
-  true
-} bool;
 
 /* Clear input until next End of Line Character - \n */
 void clearToEoln();
