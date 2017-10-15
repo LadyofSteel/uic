@@ -1,8 +1,8 @@
 /**
  *  @brief CS 211 Project 4
  *
- *  This file is used to create and use a linked-list
- *  for the waiting list.
+ *  This file is used to create and use a doubly
+ *  linked-list for the waiting list.
  *
  *  @author Ammar Subei
 */
@@ -21,10 +21,11 @@ typedef enum
 */
 typedef struct ListNode
 {
-  char *name;             ///< String name of group
-  int size;               ///< Integer value for the group size
-  bool in_restaurant;     ///< Boolean if group is in restaurant
-  struct ListNode *next;  ///< Pointer to the next group
+  char *name;                 ///< String name of group
+  int size;                   ///< Integer value for the group size
+  bool in_restaurant;         ///< Boolean if group is in restaurant
+  struct ListNode *next;      ///< Pointer to the next group
+  struct ListNode *previous;  ///< Pointer to the previous group
 } ListNode;
 
 /**
@@ -33,7 +34,32 @@ typedef struct ListNode
 typedef struct List
 {
   ListNode *head; ///< Pointer to the head of the list
+  ListNode *tail; ///< Pointer to the tail of the list
 } List;
+
+/**
+ *  @brief Creates a new list object
+ *
+ *  @return new List object
+*/
+List* createList();
+
+/**
+ *  @brief Frees one list node
+ *
+ *  @param ListNode object
+*/
+void freeNode(ListNode *node);
+
+/**
+ *  @brief Clears the given list
+ *
+ *  Deletes all groups in the given list.
+ *  Does not delete the list itself.
+ *
+ *  @param List object
+*/
+void clearList(List *list);
 
 /**
  *  @brief Adds new group to the list
@@ -42,7 +68,7 @@ typedef struct List
  *  @param string group name
  *  @param int group size
 */
-void addToList(List *list, char *name, int size);
+void addToList(List *list, char *new_name, int new_size, bool waiting);
 
 /**
  *  @brief Checks if name is already taken
@@ -51,7 +77,7 @@ void addToList(List *list, char *name, int size);
  *  @param string group name
  *  @return bool if name already exists
 */
-bool doesNameExist(List *list, char *name);
+bool doesNameExist(List *list, char *target_name);
 
 /**
  *  @brief Updates group status
@@ -61,7 +87,7 @@ bool doesNameExist(List *list, char *name);
  *  @param bool new status
  *  @return bool if group has same status
 */
-bool updateStatus(List *list, char *name, bool new_status);
+bool updateStatus(List *list, char *target_name, bool new_status);
 
 /**
  *  @brief Retrieves group that fits table size
@@ -79,7 +105,7 @@ char* retrieveAndRemove(List *list, int table_size);
  *  @param string group name
  *  @return int number of groups ahead
 */
-int countGroupsAhead(List *list, char *name);
+int countGroupsAhead(List *list, char *target_name);
 
 /**
  *  @brief Displays group sizes ahead of given group
@@ -87,7 +113,7 @@ int countGroupsAhead(List *list, char *name);
  *  @param List object
  *  @param string group name
 */
-void displayGroupSizeAhead(List *list, char *name);
+void displayGroupSizeAhead(List *list, char *target_name);
 
 /**
  *  @brief Displays every group info in the list

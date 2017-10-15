@@ -162,6 +162,7 @@ void printCommands()
 
 int main (int argc, char **argv)
 {
+  List *my_list = createList();
   int ch;
 
   printf ("Starting Restaurant Wait List Program\n\n");
@@ -175,17 +176,17 @@ int main (int argc, char **argv)
     } else if (ch == '?') {
       printCommands();
     } else if(ch == 'a') {
-      doAdd();
+      doAdd(my_list);
     } else if(ch == 'c') {
-      doCallAhead();
+      doCallAhead(my_list);
     } else if(ch == 'w') {
-      doWaiting();
+      doWaiting(my_list);
     } else if(ch == 'r') {
-      doRetrieve();
+      doRetrieve(my_list);
     } else if(ch == 'l') {
-      doList();
+      doList(my_list);
     } else if(ch == 'd') {
-      doDisplay();
+      doDisplay(my_list);
     } else if(ch == '\n') {
       /* nothing entered on input line     *
       * do nothing, but don't give error  */

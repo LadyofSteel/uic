@@ -6,9 +6,9 @@
  *  @author Ammar Subei
 */
 
-#include "interface.h"
+#include "commands.h"
 
-void doAdd()
+void doAdd(List *list)
 {
   // Get group size from input
   int size = getPosInt();
@@ -32,11 +32,11 @@ void doAdd()
 
   printf ("Adding group \"%s\" of size %d\n", name, size);
 
-  // add code to perform this operation here
+  addToList(list, name, size, true);
 }
 
 
-void doCallAhead()
+void doCallAhead(List *list)
 {
   // Get group size from input
   int size = getPosInt();
@@ -61,10 +61,10 @@ void doCallAhead()
 
   printf ("Call-ahead group \"%s\" of size %d\n", name, size);
 
-  // add code to perform this operation here
+  addToList(list, name, size, false);
 }
 
-void doWaiting()
+void doWaiting(List *list)
 {
   // Get group name from input
   char *name = getName();
@@ -77,10 +77,12 @@ void doWaiting()
 
   printf ("Waiting group \"%s\" is now in the restaurant\n", name);
 
-  // add code to perform this operation here
+  if ( !updateStatus(list, name, true) ) {
+    // TODO: ERROR MESSAGE HERE
+  }
 }
 
-void doRetrieve()
+void doRetrieve(List *list)
 {
   // Get table size from input
   int size = getPosInt();
@@ -94,10 +96,11 @@ void doRetrieve()
   clearToEoln();
   printf ("Retrieve (and remove) the first group that can fit at a tabel of size %d\n", size);
 
-  // add code to perform this operation here
+  char *group_name = retrieveAndRemove(list, size);
+  // TODO: Print out result group name (dont forget error chacking)
 }
 
-void doList()
+void doList(List *list)
 {
   // Get group name from input
   char *name = getName();
@@ -110,13 +113,16 @@ void doList()
 
   printf ("Group \"%s\" is behind the following groups\n", name);
 
-  // add code to perform this operation here
+  int group_count = countGroupsAhead(list, name);
+  // TODO: print out number of groups ahead
+
+  displayGroupSizeAhead(list, name);
 }
 
-void doDisplay()
+void doDisplay(List *list)
 {
   clearToEoln();
   printf ("Display information about all groups\n");
 
-  // add code to perform this operation here
+  displayListInformation(list);
 }
