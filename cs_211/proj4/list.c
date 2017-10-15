@@ -94,42 +94,52 @@ bool updateStatus(List *list, char *target_name, bool new_status)
 char* retrieveAndRemove(List *list, int table_size)
 {
   ListNode *current = list->head;
-  char *group_name;
+  char *node_name;
 
   while (current != NULL) {
     if (current->size <= table_size) {
       if (current->in_restaurant == true) {
-        group_name = (char *) malloc( sizeof(char) * strlen(current->name) );
-        group_name = strcpy(group_name, current->name);
+        node_name = (char *) malloc( sizeof(char) * strlen(current->name) );
+        node_name = strcpy(node_name, current->name);
 
-        if (current->previous != NULL) {
-          current->previous->next = current->next;
+        if (current->previous == NULL &&
+            current->next == NULL) { // Only one node in list
+          list->head = NULL;
+          list->tail = NULL;
+          freeNode(current);
+        } else if (current->previous == NULL) { // Current is at head
+          list->head = current->next;
+          list->head->previous = NULL;
+          freeNode(current);
+        } else if (current->next == NULL) { // Current is at tail
+          list->tail = current->previous;
+          list->tail->next = NULL;
           freeNode(current);
         } else {
-          list->head = current->next;
+          current->previous->next = current->next;
           freeNode(current);
         }
 
-        return group_name;
+        return node_name;
       }
     }
     
     current = current->next;
   }
 
-  return "";
+  return NULL;
 }
 
 int countGroupsAhead(List *list, char *target_name)
 {
   ListNode *current = list->head;
-  int group_count = 0;
+  int node_count = 0;
 
   while (current != NULL) {
     if ( !strcmp(current->name, target_name) )
-      return group_count;
+      return node_count;
 
-    group_count++;
+    node_count++;
     current = current->next;
   }
 
@@ -155,12 +165,20 @@ void displayListInformation(List *list)
 {
   ListNode *current = list->head;
 
+  if (list->head == NULL) {
+    printf("Waiting list is empty! No information to provide.\n");
+    return;
+  }
+
   printf("Displaying list information.\n\n");
 
   while (current != NULL) {
     printf("Group Name:           %s\n", current->name);
     printf("Group Size:           %d\n", current->size);
-    printf("Group In-Restaurant:  %d\n\n", current->in_restaurant);
+    if (current->in_restaurant)
+      printf("Group In-Restaurant:  True\n\n");
+    else
+      printf("Group In-Restaurant:  False\n\n");
 
     current = current->next;
   }

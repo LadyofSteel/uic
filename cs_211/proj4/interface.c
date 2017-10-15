@@ -11,6 +11,8 @@
 #include "commands.h"
 #include "list.h"
 
+bool debug_mode = false;
+
 /* Clear input until next End of Line Character - \n */
 void clearToEoln()
 {
@@ -165,6 +167,13 @@ int main (int argc, char **argv)
   List *my_list = createList();
   int ch;
 
+  if (argc > 1) {
+    if ( !strcmp(argv[1], "-d") ) {
+      debug_mode = true;
+      printf("In debug mode!\n");
+    }
+  }
+
   printf ("Starting Restaurant Wait List Program\n\n");
   printf ("Enter command: ");
 
@@ -174,23 +183,50 @@ int main (int argc, char **argv)
       printf ("Quitting Program\n");
       return (0);
     } else if (ch == '?') {
+      if (debug_mode)
+        printf ("DEBUG: Printing list of commands\n");
+
       printCommands();
     } else if(ch == 'a') {
+      if (debug_mode)
+        printf ("DEBUG: Attempting to add group to waiting list\n");
+
       doAdd(my_list);
     } else if(ch == 'c') {
+      if (debug_mode)
+        printf ("DEBUG: Attempting to add group as call-ahead\n");
+
       doCallAhead(my_list);
     } else if(ch == 'w') {
+      if (debug_mode)
+        printf ("DEBUG: Changing call-ahead group to in-restaurant\n");
+
       doWaiting(my_list);
     } else if(ch == 'r') {
+      if (debug_mode)
+        printf ("DEBUG: Attempting to retrieve a waiting group\n");
+
       doRetrieve(my_list);
     } else if(ch == 'l') {
+      if (debug_mode)
+        printf ("DEBUG: Listing groups waiting ahead\n");
+
       doList(my_list);
     } else if(ch == 'd') {
+      if (debug_mode)
+        printf ("DEBUG: Displaying every group in waiting list\n");
+
       doDisplay(my_list);
     } else if(ch == '\n') {
+      if (debug_mode)
+        printf ("DEBUG: No command was entered...\n");
+
       /* nothing entered on input line     *
       * do nothing, but don't give error  */
     } else {
+      if (debug_mode)
+        printf ("DEBUG: Invalid command entered\n");
+
       printf ("%c - in not a valid command\n", ch);
       printf ("For a list of valid commands, type ?\n");
       clearToEoln();

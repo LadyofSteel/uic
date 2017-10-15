@@ -30,11 +30,14 @@ void doAdd(List *list)
     return;
   }
 
-  printf ("Adding group \"%s\" of size %d\n", name, size);
+  if ( doesNameExist(list, name) ) {
+    printf ("ERROR: group name %s already exists!\n", name);
+    return;
+  }
 
+  printf ("Adding group \"%s\" of size %d\n", name, size);
   addToList(list, name, size, true);
 }
-
 
 void doCallAhead(List *list)
 {
@@ -59,6 +62,11 @@ void doCallAhead(List *list)
     return;
   }
 
+  if ( doesNameExist(list, name) ) {
+    printf ("ERROR: group name %s already exists!\n", name);
+    return;
+  }
+
   printf ("Call-ahead group \"%s\" of size %d\n", name, size);
 
   addToList(list, name, size, false);
@@ -75,10 +83,15 @@ void doWaiting(List *list)
     return;
   }
 
+  if ( !doesNameExist(list, name) ) {
+    printf ("ERROR: group %s is not in the waiting list\n", name);
+    return;
+  }
+
   printf ("Waiting group \"%s\" is now in the restaurant\n", name);
 
   if ( !updateStatus(list, name, true) ) {
-    // TODO: ERROR MESSAGE HERE
+    printf("ERROR: group %s is already waiting in the restaurant.\n", name);
   }
 }
 
@@ -97,7 +110,14 @@ void doRetrieve(List *list)
   printf ("Retrieve (and remove) the first group that can fit at a tabel of size %d\n", size);
 
   char *group_name = retrieveAndRemove(list, size);
-  // TODO: Print out result group name (dont forget error chacking)
+  
+  if (group_name == NULL) {
+    printf("ERROR: could not find group of size %d or smaller waiting in restaurant\n", size);
+    return;
+  }
+
+  printf("Successfully retrieved group %s.\n", group_name);
+  free(group_name);
 }
 
 void doList(List *list)
@@ -111,10 +131,13 @@ void doList(List *list)
     return;
   }
 
-  printf ("Group \"%s\" is behind the following groups\n", name);
+  if ( !doesNameExist(list, name) ) {
+    printf ("ERROR: group %s is not in the waiting list\n", name);
+    return;
+  }
 
   int group_count = countGroupsAhead(list, name);
-  // TODO: print out number of groups ahead
+  printf ("Group \"%s\" is behind %d groups\n", name, group_count);
 
   displayGroupSizeAhead(list, name);
 }
