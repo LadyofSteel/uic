@@ -9,30 +9,41 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
-#include <stdio.h>
-#include <ctype.h>
-#include <stdlib.h>
-#include <string.h>
-
-/* Clear input until next End of Line Character - \n */
+/**
+ *  @brief Clear input until next EOL character
+*/
 void clearToEoln();
 
-/* Read in until the first Non-White-Space character is Read */
-/* The white space characters are:
-*      space, tab \t, newline \n, vertical tab \v, 
-*      form feed \f, and carriage return \r
-*/ 
-int getNextNWSChar ();
+/**
+ *  @brief Read in until the first non-white-space character
+ *
+ *  The white space characters are:
+ *  space, tab \t, newline \n, vertical tab \v,
+ *  form feed \f, and carriage return \r.
+ *
+ *  @return character input
+*/
+char getNextNWSChar();
 
-/* read in the next Positive Integer or error:    */
-/* This is based on the Mathematical definition of a Postive Integer */
-/*    zero is not counted as a positive number */ 
-int getPosInt ();
+/**
+ *  @brief Read in a positive integer
+ *
+ *  Zero is not counted as a positive number,
+ *
+ *  @return positive integer input
+*/
+int getPosInt();
 
-/* read in the name until the end of the input */
-char *getName();
+/**
+ *  @brief Read in the name until the end of the input
+ *
+ *  @return string input name
+*/
+char* getName();
 
-/* Print out a list of the commands for this program */
+/**
+ *  @brief Print out a list of the commands for this program
+*/
 void printCommands();
 
 #endif /* INTERFACE_H */

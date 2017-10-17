@@ -37,7 +37,7 @@ void clearList(List *list)
   }
 }
 
-void addToList(List *list, char *new_name, int new_size, bool waiting)
+void addToList(List *list, char *new_name, int new_size, bool waiting, bool debug)
 {
   ListNode *new_node = (ListNode *) malloc( sizeof(ListNode) );
   new_node->name = (char *) malloc( sizeof(char) * strlen(new_name));
@@ -55,6 +55,9 @@ void addToList(List *list, char *new_name, int new_size, bool waiting)
     new_node->previous = list->tail;
     list->tail = new_node;
   }
+
+  if (debug)
+    printf("DEBUG: new group %s added to tail of the list\n", new_name);
 }
 
 bool doesNameExist(List *list, char *target_name)
@@ -71,11 +74,14 @@ bool doesNameExist(List *list, char *target_name)
   return false;
 }
 
-bool updateStatus(List *list, char *target_name, bool new_status)
+bool updateStatus(List *list, char *target_name, bool new_status, bool debug)
 {
   ListNode *current = list->head;
 
   while (current != NULL) {
+    if (debug)
+      printf("DEBUG: checking group %s\n", current->name);
+
     if ( !strcmp(current->name, target_name) ) {
       if (current->in_restaurant != new_status) {
         current->in_restaurant = new_status;
@@ -91,12 +97,15 @@ bool updateStatus(List *list, char *target_name, bool new_status)
   return false;
 }
 
-char* retrieveAndRemove(List *list, int table_size)
+char* retrieveAndRemove(List *list, int table_size, bool debug)
 {
   ListNode *current = list->head;
   char *node_name;
 
   while (current != NULL) {
+    if (debug)
+      printf("DEBUG: checking group %s\n", current->name);
+
     if (current->size <= table_size) {
       if (current->in_restaurant == true) {
         node_name = (char *) malloc( sizeof(char) * strlen(current->name) );
@@ -104,18 +113,30 @@ char* retrieveAndRemove(List *list, int table_size)
 
         if (current->previous == NULL &&
             current->next == NULL) { // Only one node in list
+          if (debug)
+            printf("DEBUG: Retrieving the only group in the list\n");
+
           list->head = NULL;
           list->tail = NULL;
           freeNode(current);
         } else if (current->previous == NULL) { // Current is at head
+          if (debug)
+            printf("DEBUG: Retrieving the group at the head of the list\n");
+
           list->head = current->next;
           list->head->previous = NULL;
           freeNode(current);
         } else if (current->next == NULL) { // Current is at tail
+          if (debug)
+            printf("DEBUG: Retrieving the group at the tail of the list\n");
+
           list->tail = current->previous;
           list->tail->next = NULL;
           freeNode(current);
         } else {
+          if (debug)
+            printf("DEBUG: Retrieving the group somewhere in the middle of the list\n");
+
           current->previous->next = current->next;
           freeNode(current);
         }
@@ -130,12 +151,15 @@ char* retrieveAndRemove(List *list, int table_size)
   return NULL;
 }
 
-int countGroupsAhead(List *list, char *target_name)
+int countGroupsAhead(List *list, char *target_name, bool debug)
 {
   ListNode *current = list->head;
   int node_count = 0;
 
   while (current != NULL) {
+    if (debug)
+      printf("DEBUG: checking group %s\n", current->name);
+
     if ( !strcmp(current->name, target_name) )
       return node_count;
 
@@ -147,11 +171,14 @@ int countGroupsAhead(List *list, char *target_name)
   return -1;
 }
 
-void displayGroupSizeAhead(List *list, char *target_name)
+void displayGroupSizeAhead(List *list, char *target_name, bool debug)
 {
   ListNode *current = list->head;
 
   while (current != NULL) {
+    if (debug)
+      printf("DEBUG: checking group %s\n", current->name);
+
     if ( !strcmp(current->name, target_name) )
       return;
 
@@ -161,7 +188,7 @@ void displayGroupSizeAhead(List *list, char *target_name)
   }
 }
 
-void displayListInformation(List *list)
+void displayListInformation(List *list, bool debug)
 {
   ListNode *current = list->head;
 
@@ -173,6 +200,9 @@ void displayListInformation(List *list)
   printf("Displaying list information.\n\n");
 
   while (current != NULL) {
+    if (debug)
+      printf("DEBUG: checking group %s\n", current->name);
+
     printf("Group Name:           %s\n", current->name);
     printf("Group Size:           %d\n", current->size);
     if (current->in_restaurant)

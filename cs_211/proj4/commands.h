@@ -17,32 +17,50 @@
 
 /**
  *  @brief Adds new group
+ *
+ *  @param List object
+ *  @param bool in debug mode
 */
-void doAdd(List *list);
+void doAdd(List *list, bool debug);
 
 /**
  *  @brief Sets new group as call-ahead
+ *
+ *  @param List object
+ *  @param bool in debug mode
 */
-void doCallAhead(List *list);
+void doCallAhead(List *list, bool debug);
 
 /**
  *  @brief Sets call-ahead group to waiting
+ *
+ *  @param List object
+ *  @param bool in debug mode
 */
-void doWaiting(List *list);
+void doWaiting(List *list, bool debug);
 
 /**
  *  @brief Removes the first group from the waiting list
+ *
+ *  @param List object
+ *  @param bool in debug mode
 */
-void doRetrieve(List *list);
+void doRetrieve(List *list, bool debug);
 
 /**
  *  @brief Lists all groups after given group
+ *
+ *  @param List object
+ *  @param bool in debug mode
 */
-void doList(List *list);
+void doList(List *list, bool debug);
 
 /**
  *  @brief Displays all groups on the waiting list
+ *
+ *  @param List object
+ *  @param bool in debug mode
 */
-void doDisplay(List *list);
+void doDisplay(List *list, bool debug);
 
 #endif /* COMMANDS_H */

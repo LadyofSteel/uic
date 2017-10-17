@@ -68,7 +68,7 @@ void clearList(List *list);
  *  @param string group name
  *  @param int group size
 */
-void addToList(List *list, char *new_name, int new_size, bool waiting);
+void addToList(List *list, char *new_name, int new_size, bool waiting, bool debug);
 
 /**
  *  @brief Checks if name is already taken
@@ -87,7 +87,7 @@ bool doesNameExist(List *list, char *target_name);
  *  @param bool new status
  *  @return bool if group has same status
 */
-bool updateStatus(List *list, char *target_name, bool new_status);
+bool updateStatus(List *list, char *target_name, bool new_status, bool debug);
 
 /**
  *  @brief Retrieves group that fits table size
@@ -96,7 +96,7 @@ bool updateStatus(List *list, char *target_name, bool new_status);
  *  @param int table size
  *  @return string name of the group
 */
-char* retrieveAndRemove(List *list, int table_size);
+char* retrieveAndRemove(List *list, int table_size, bool debug);
 
 /**
  *  @brief Counts number of groups ahead of given group
@@ -105,7 +105,7 @@ char* retrieveAndRemove(List *list, int table_size);
  *  @param string group name
  *  @return int number of groups ahead
 */
-int countGroupsAhead(List *list, char *target_name);
+int countGroupsAhead(List *list, char *target_name, bool debug);
 
 /**
  *  @brief Displays group sizes ahead of given group
@@ -113,13 +113,13 @@ int countGroupsAhead(List *list, char *target_name);
  *  @param List object
  *  @param string group name
 */
-void displayGroupSizeAhead(List *list, char *target_name);
+void displayGroupSizeAhead(List *list, char *target_name, bool debug);
 
 /**
  *  @brief Displays every group info in the list
  *
  *  @param List object
 */
-void displayListInformation(List *list);
+void displayListInformation(List *list, bool debug);
 
 #endif /* LIST_H */

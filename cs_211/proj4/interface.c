@@ -7,13 +7,15 @@
  *  @author Ammar Subei
 */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
 #include "interface.h"
 #include "commands.h"
 #include "list.h"
 
-bool debug_mode = false;
-
-/* Clear input until next End of Line Character - \n */
 void clearToEoln()
 {
   char ch;
@@ -23,23 +25,17 @@ void clearToEoln()
   } while ((ch != '\n') && (ch != EOF));
 }
 
-/* Read in until the first Non-White-Space character is Read */
-/* The white space characters are:
-*      space, tab \t, newline \n, vertical tab \v, 
-*      form feed \f, and carriage return \r
-*/ 
-int getNextNWSChar ()
+char getNextNWSChar()
 {
-  int ch;
-
+  char ch;
   ch = getc(stdin);
 
   if (ch == EOF || ch == '\n')
     return ch;
 
-  while (isspace (ch))
-  {
+  while (isspace (ch)) {
     ch = getc(stdin);
+
     if (ch == EOF || ch == '\n')
       return ch;
   }
@@ -47,24 +43,24 @@ int getNextNWSChar ()
   return ch;
 }
 
-/* read in the next Positive Integer or error:    */
-/* This is based on the Mathematical definition of a Postive Integer */
-/*    zero is not counted as a positive number */ 
-int getPosInt ()
+int getPosInt()
 {
   int value = 0;
 
-  /* clear white space characters */
+  // Clear white space characters
   int ch;
   ch = getc(stdin);
   while (!isdigit(ch)) {
-    if ('\n' == ch)  /* error \n ==> no integer given */
+    // Error \n ==> no integer given
+    if ('\n' == ch)  
       return 0;
 
-    if (!isspace(ch)) { /* error non white space ==> integer not given next */
+    // Error non white space ==> integer not given next
+    if (!isspace(ch)) { 
       clearToEoln();
       return 0;
     }
+
     ch = getc(stdin);
   }
 
@@ -76,24 +72,24 @@ int getPosInt ()
     ch = getc(stdin);
   }
 
-  ungetc (ch, stdin);  /* put the last read character back in input stream */
+  // Put the last read character back in input stream
+  ungetc(ch, stdin); 
 
-  /* Integer value of 0 is an error in this program */
+  // Integer value of 0 is an error in this program
   if (0 == value)
-  clearToEoln();
+    clearToEoln();
 
   return value;
 }
 
-/* read in the name until the end of the input */
-char *getName()
+char* getName()
 {
-  /* skip over the white space characters */
+  // Skip over the white space characters
   int ch;
   ch = getc(stdin);
 
   while (isspace(ch)) {
-    if ('\n' == ch)  /* error \n ==> no integer given */
+    if ('\n' == ch)  // Error \n ==> no integer given
       return NULL;
     ch = getc(stdin);
   }
@@ -103,23 +99,24 @@ char *getName()
   size = 10;
   word = (char *) malloc (sizeof(char) * size);
 
-  // read in character-by-character until the newline is encountered
+  // Read in character-by-character until the newline is encountered
   int count = 0;
 
   while (ch != '\n') {
     if (count + 1 >= size) {
-      // to grow an array to make it "dynamically sized" using malloc
+      // Grow an array to make it "dynamically sized" using malloc
       char* temp;
-      int i;
       size = size * 2;
-      temp = (char *) malloc (sizeof(char) * size);
+      temp = (char *) malloc ( sizeof(char) * size );
 
-      // printf ("Growing array from size %d to size %d\n", count, size);
-      // copy the characters to the new array
+      printf ("Growing array from size %d to size %d\n", count, size);
+
+      // Copy the characters to the new array
+      int i;
       for (i = 0; i < count; i++)
         temp[i] = word[i];
 
-      free (word);
+      free(word);
       word = temp;
     }
 
@@ -127,7 +124,7 @@ char *getName()
     count++;
     word[count] = '\0';
 
-    // read next character
+    // Read next character
     ch = getc(stdin);
   }
 
@@ -136,7 +133,7 @@ char *getName()
     word[count] = '\0';
   }
 
-  /* clear ending white space characters */
+  // Clear ending white space characters
   while ( isspace(word[count-1]) ) {
     count--;
     word[count] = '\0';
@@ -145,26 +142,25 @@ char *getName()
   return word;
 }
 
-/* Print out a list of the commands for this program */
 void printCommands()
 {
-  printf ("The commands for this program are:\n\n");
-  printf ("q - to quit the program\n");
-  printf ("? - to list the accepted commands\n");
-  printf ("a <size> <name> - to add a group to the wait list\n");
-  printf ("c <size> <name> - to add a call-ahead group to the wait list\n");
-  printf ("w <name> - to specify a call-ahead group is now waiting in the restaurant\n");
-  printf ("r <table-size> - to retrieve the first waiting group that can fit at the available table size\n");
-  printf ("l <name> - list how many groups are ahead of the named group\n");
-  printf ("d - display the wait list information\n");
+  printf("The commands for this program are:\n\n");
+  printf("q - to quit the program\n");
+  printf("? - to list the accepted commands\n");
+  printf("a <size> <name> - to add a group to the wait list\n");
+  printf("c <size> <name> - to add a call-ahead group to the wait list\n");
+  printf("w <name> - to specify a call-ahead group is now waiting in the restaurant\n");
+  printf("r <table-size> - to retrieve the first waiting group that can fit at the available table size\n");
+  printf("l <name> - list how many groups are ahead of the named group\n");
+  printf("d - display the wait list information\n");
 
-  /* clear input to End of Line */
   clearToEoln();
 }
 
 int main (int argc, char **argv)
 {
   List *my_list = createList();
+  bool debug_mode = false;
   int ch;
 
   if (argc > 1) {
@@ -174,65 +170,56 @@ int main (int argc, char **argv)
     }
   }
 
-  printf ("Starting Restaurant Wait List Program\n\n");
-  printf ("Enter command: ");
+  printf("Starting Restaurant Wait List Program\n\n");
+  printf("Enter command: ");
 
-  while ((ch = getNextNWSChar ()) != EOF) {
-    /* check for the various commands */
+  while ((ch = getNextNWSChar()) != EOF) {
+    // Check for the various commands
     if (ch == 'q') {
-      printf ("Quitting Program\n");
-      return (0);
+      printf("Quitting Program\n");
+      return 0;
     } else if (ch == '?') {
       if (debug_mode)
-        printf ("DEBUG: Printing list of commands\n");
+        printf("DEBUG: Printing list of commands\n");
 
       printCommands();
-    } else if(ch == 'a') {
+    } else if (ch == 'a') {
       if (debug_mode)
-        printf ("DEBUG: Attempting to add group to waiting list\n");
+        printf("DEBUG: Attempting to add group to waiting list\n");
 
-      doAdd(my_list);
-    } else if(ch == 'c') {
+      doAdd(my_list, debug_mode);
+    } else if (ch == 'c') {
       if (debug_mode)
-        printf ("DEBUG: Attempting to add group as call-ahead\n");
+        printf("DEBUG: Attempting to add group as call-ahead\n");
 
-      doCallAhead(my_list);
-    } else if(ch == 'w') {
+      doCallAhead(my_list, debug_mode);
+    } else if (ch == 'w') {
       if (debug_mode)
-        printf ("DEBUG: Changing call-ahead group to in-restaurant\n");
+        printf("DEBUG: Changing call-ahead group to in-restaurant\n");
 
-      doWaiting(my_list);
-    } else if(ch == 'r') {
+      doWaiting(my_list, debug_mode);
+    } else if (ch == 'r') {
       if (debug_mode)
-        printf ("DEBUG: Attempting to retrieve a waiting group\n");
+        printf("DEBUG: Attempting to retrieve a waiting group\n");
 
-      doRetrieve(my_list);
-    } else if(ch == 'l') {
+      doRetrieve(my_list, debug_mode);
+    } else if (ch == 'l') {
       if (debug_mode)
-        printf ("DEBUG: Listing groups waiting ahead\n");
+        printf("DEBUG: Listing groups waiting ahead\n");
 
-      doList(my_list);
-    } else if(ch == 'd') {
+      doList(my_list, debug_mode);
+    } else if (ch == 'd') {
+      doDisplay(my_list, debug_mode);
+    } else if (ch == '\n') {
       if (debug_mode)
-        printf ("DEBUG: Displaying every group in waiting list\n");
-
-      doDisplay(my_list);
-    } else if(ch == '\n') {
-      if (debug_mode)
-        printf ("DEBUG: No command was entered...\n");
-
-      /* nothing entered on input line     *
-      * do nothing, but don't give error  */
-    } else {
-      if (debug_mode)
-        printf ("DEBUG: Invalid command entered\n");
-
-      printf ("%c - in not a valid command\n", ch);
-      printf ("For a list of valid commands, type ?\n");
+        printf("DEBUG: No command was entered...\n");
+    } else { // Nothing entered on input line
+      printf("%c - in not a valid command\n", ch);
+      printf("For a list of valid commands, type ?\n");
       clearToEoln();
     }
 
-    printf ("\nEnter command: ");
+    printf("\nEnter command: ");
   }
 
   printf ("Quiting Program - EOF reached\n");
