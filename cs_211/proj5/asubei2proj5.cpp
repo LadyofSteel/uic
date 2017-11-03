@@ -2,8 +2,7 @@
  *  This file contains the user interface code for the Infix Evaluation Project
  *  Project 5 for CS 211 for Fall 2017
  *
- *  Date: 10/21/17
- *
+ *  @date 10/21/17
  *  @author Patrick Troy
  *  @author Ammar Subei
 */
@@ -187,16 +186,16 @@ bool processExpression(Token inputToken, TokenReader *tr)
     return false;
   }
 
-  printf ("\n");
+  std::cout << std::endl;
   return true;
 }
 
 void printCommands()
 {
-  printf ("The commands for this program are:\n\n");
-  printf ("q - to quit the program\n");
-  printf ("? - to list the accepted commands\n");
-  printf ("or any infix mathematical expression using operators of (), *, /, +, -\n");
+  std::cout << "The commands for this program are:" << std::endl << std::endl;
+  std::cout << "q - to quit the program" << std::endl;
+  std::cout << "? - to list the accepted commands" << std::endl;
+  std::cout << "or any infix mathematical expression using operators of (), *, /, +, -" << std::endl;
 }
 
 int main(int argc, char *argv[])

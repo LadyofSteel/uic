@@ -1,7 +1,7 @@
 /**
- *  @brief OperatorStack definitions
+ *  @brief MyStack definitions
  *
- *  This file is used to define the Operator object functions.
+ *  This file is used to define the MyStack object functions.
  *
  *  @author Ammar Subei
 */
@@ -15,13 +15,13 @@ MyStack<DataType>::MyStack()
 {
   setCapacity(2);
   setSize(0);
-  data = (DataType *) malloc( sizeof(DataType) * capacity );
+  data = new DataType[capacity];
 }
 
 template<class DataType>
 MyStack<DataType>::~MyStack()
 {
-  free(data);
+  delete(data);
 }
 
 template<class DataType>
@@ -41,7 +41,7 @@ void MyStack<DataType>::resize()
 {
   capacity += 2;
 
-  DataType *temp_data = (DataType *) malloc( sizeof(DataType) * capacity );
+  DataType *temp_data = new DataType[capacity];
 
   for (int i = 0; i < size; i++)
     temp_data[i] = data[i];
@@ -56,7 +56,7 @@ void MyStack<DataType>::reset()
 
   size = 0;
   capacity = 2;
-  data = (DataType *) malloc( sizeof(DataType) * capacity );
+  data = new DataType[capacity];
 }
 
 template<class DataType>
