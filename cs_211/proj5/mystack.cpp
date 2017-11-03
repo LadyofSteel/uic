@@ -21,7 +21,7 @@ MyStack<DataType>::MyStack()
 template<class DataType>
 MyStack<DataType>::~MyStack()
 {
-  delete(data);
+  delete[] data;
 }
 
 template<class DataType>
@@ -46,13 +46,14 @@ void MyStack<DataType>::resize()
   for (int i = 0; i < size; i++)
     temp_data[i] = data[i];
 
+  delete[] data;
   data = temp_data;
 }
 
 template<class DataType>
 void MyStack<DataType>::reset()
 {
-  free(data);
+  delete[] data;
 
   size = 0;
   capacity = 2;

@@ -157,7 +157,7 @@ bool processExpression(Token inputToken, TokenReader *tr)
     }
 
     /* get next token from input */
-    inputToken = tr->getNextToken ();
+    inputToken = tr->getNextToken();
   }
 
   /* The expression has reached its end */
