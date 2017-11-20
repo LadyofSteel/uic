@@ -4,23 +4,18 @@ SRCEXT 	:= cpp
 TARGET 	:= proj6
 SOURCES := $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
 HEADERS := $(shell find $(SRCDIR) -type f -name "*.h")
-OBJECTS := $(SOURCES:.cpp=.o)
 CFLAGS 	:= -g -Wall
 
 $(TARGET): $(SOURCES) $(HEADERS)
-	$(CC) -c $(SOURCES) $(CFLAGS)
-	$(CC) -o $@ $(OBJECTS)
+	$(CC) -o $@ $(SOURCES) $(CFLAGS)
 
 run:
 	./$(TARGET)
-
-debug: clean $(TARGET)
-	./$(TARGET) -d
 
 all: clean $(TARGET) run
 
 clean:
 	@echo "Cleaning..."
-	$(RM) $(TARGET) $(OBJECTS)
+	$(RM) $(TARGET)
 
 .PHONY: clean
