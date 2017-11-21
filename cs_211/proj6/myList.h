@@ -1,5 +1,5 @@
 /**
- *  @brief Linked-list header file
+ *  @brief MyList header file
  *
  *  @author Ammar Subei
  */
@@ -69,16 +69,18 @@ class MyList
     bool isEmpty() const;
 
     /**
-     *  @brief Resets the list
-     */
-    void reset();
-
-    /**
      *  @brief Checks if list contains given data
      *  @param DataType data
      *  @return bool given data is in the list
     */
     bool contains(const DataType data);
+
+    /**
+     *  @brief Gets the node with given data
+     *  @param DataType data
+     *  @return MyNode node that holds the data
+    */
+    MyNode<DataType>* getNode(const DataType data);
 
     /**
      *  @brief Adds data to list
@@ -89,6 +91,12 @@ class MyList
     /**
      *  @brief Removes data from list
      *  @param DataType data to remove
+     *  @return bool remove successful
      */
-    void remove(DataType data);
+    bool remove(DataType data);
+
+    /**
+     *  @brief Removes all nodes from list
+     */
+    void removeAll();
 };
