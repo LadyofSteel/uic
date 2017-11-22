@@ -7,8 +7,9 @@
 #pragma once
 
 #include <string>
+#include <cstdlib>
 
-#include "island.h"
+class Arena;
 
 class Creature
 {
@@ -18,16 +19,15 @@ class Creature
      */
     enum class Type
     {
+      NONE,     ///< Not a creature
       ANT,      ///< Ant
       DOODLEBUG ///< DoodleBug
-    }
+    };
 
     /**
      *  @brief Default constructor
      */
-    virtual Creature(Island& island)
-    {
-    }
+    Creature(Arena *arena);
 
     /**
      *  @brief Destructor
@@ -35,57 +35,79 @@ class Creature
     ~Creature();
 
     /**
-     *  @brief Getter for x position
+     *  @brief Getter for type of creature
+     *  @return Type type of creature
      */
-    int getXPos()                 const { return xPos; }
+    Creature::Type getType()        const { return type; }
+
+    /**
+     *  @brief Getter for x position
+     *  @return int current x position
+     */
+    int getXPos()                   const { return xPos; }
 
     /**
      *  @brief Getter for y position
+     *  @return int current y position
      */
-    int getYPos()                 const { return yPos; }
+    int getYPos()                   const { return yPos; }
 
     /**
      *  @brief Getter for last spawn day
+     *  @return int last spawn day
      */
-    int getLastSpawn()            const { return lastSpawned; }
+    int getLastSpawn()              const { return lastSpawned; }
 
     /**
-     *  @brief Getter for creature's environment
+     *  @brief Getter for creature's arena
+     *  @return Arena* creature's arena
      */
-    Island getIsland()            const { return island; }
+    Arena* getArena()               const { return arena; }
+
+    /**
+     *  @brief Setter for type of creature
+     *  @param Type new creature type
+     */
+    void setType(const Creature::Type t)  { type = t; }
 
     /**
      *  @brief Setter for x position
+     *  @param int new x position
      */
-    void setXPos(const int x)           { xPos = x; }
+    void setXPos(const int x)             { xPos = x; }
 
     /**
      *  @brief Setter for y position
+     *  @param int new y position
      */
-    void setYPos(const int y)           { yPos = y; }
+    void setYPos(const int y)             { yPos = y; }
 
     /**
      *  @brief Setter for last spawn day
+     *  @param int new last spawn day
      */
-    void setLastSpawn(const int value)  { lastSpawned = value; }
+    void setLastSpawn(const int value)    { lastSpawned = value; }
 
     /**
-     *  @brief Setter for x position
+     *  @brief Setter for creature's arena
+     *  @param Arena* new creature arena
      */
-    void setIsland(const int value)     { yPos = y; }
+    void setArena(Arena *newArena)        { arena = newArena; }
 
     /**
      *  @brief Moves the creature
+     *  @return bool move successful
      */
     virtual bool move();
 
     /**
      *  @brief Spawns a new creature
      */
-    virtual Creature spawn();
+    virtual void spawn();
 
   private:
-    Island island;    ///< Creature's environment
+    Type type;        ///< Creature's type
+    Arena *arena;     ///< Creature's environment
     int xPos;         ///< Current x position
     int yPos;         ///< Current y position
     int lastSpawned;  ///< Last day creature spawned a new creature
