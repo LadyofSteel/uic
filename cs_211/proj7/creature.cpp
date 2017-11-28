@@ -17,7 +17,7 @@ Creature::Creature(Arena *arena)
   do {
     x = rand() % arena->getRows();
     y = rand() % arena->getColumns();
-  } while ( !arena->isValid(x) && !arena->isValid(y) );
+  } while ( !arena->isValid(x, y) );
 
   setXPos(x);
   setYPos(y);
@@ -29,5 +29,9 @@ bool Creature::move()
 }
 
 void Creature::spawn()
+{
+}
+
+void Creature::live()
 {
 }

@@ -98,14 +98,19 @@ class Creature
      *  @brief Moves the creature
      *  @return bool move successful
      */
-    virtual bool move();
+    bool move();
 
     /**
      *  @brief Spawns a new creature
      */
-    virtual void spawn();
+    void spawn();
 
-  private:
+    /**
+     *  @brief Lives for one day
+     */
+    virtual void live();
+
+  protected:
     Type type;        ///< Creature's type
     Arena *arena;     ///< Creature's environment
     int xPos;         ///< Current x position

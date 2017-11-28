@@ -1,3 +1,8 @@
+/**
+ *  @brief Arena class definitions
+ *
+ *  @author Ammar Subei
+ */
 
 #include "arena.h"
 
@@ -18,7 +23,52 @@ Arena::Arena(GridDisplay *grid)
   }
 }
 
-bool Arena::isValid(const int value) const
+char Arena::getCreatureSymbol(const Creature::Type type) const
 {
-  return false;
+  switch (type) {
+    case Creature::Type::NONE:
+      return '.';
+    case Creature::Type::ANT:
+      return '*';
+    case Creature::Type::DOODLEBUG:
+      return '@';
+    default:
+      return '.';
+  }
+}
+
+bool Arena::isValid(const int x, const int y) const
+{
+  if ((x >= 0 && x < getRows()) && (y >= 0 && y < getColumns())) {
+    return (creatureLocations[x][y] == Creature::Type::NONE);
+  } else {
+    return false;
+  }
+}
+
+bool Arena::addCreature(Creature *creature, const int x, const int y)
+{
+  if ( !isValid(x, y) )
+    return false;
+
+  Creature::Type type = creature->getType();
+  creatureLocations[x][y] = type;
+  grid->setChar(x, y, getCreatureSymbol(type));
+  return true;
+}
+
+bool Arena::moveCreature(const int x, const int y, const int newX, const int newY)
+{
+  if ( !isValid(x, y) )
+    return false;
+
+  if ( !isValid(newX, newY) )
+    return false;
+
+  creatureLocations[newX][newY] = creatureLocations[x][y];
+  creatureLocations[x][y] = Creature::Type::NONE;
+
+  grid->setChar(x, y, getCreatureSymbol(creatureLocations[x][y]));
+  grid->setChar(newX, newY, getCreatureSymbol(creatureLocations[newX][newY]));
+  return true;
 }
