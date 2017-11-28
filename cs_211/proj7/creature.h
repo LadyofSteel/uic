@@ -95,6 +95,20 @@ class Creature
     void setArena(Arena *newArena)        { arena = newArena; }
 
     /**
+     *  @brief Getter for a valid adjacent position
+     *
+     *  It first checks if at least one adjacent position is valid.
+     *  If all adjacent positions are invalid, then the new positions
+     *  will be set to -1.
+     *
+     *  @param int current x position
+     *  @param int current y position
+     *  @param int output new x position
+     *  @param int output new y position
+     */
+    void getAdjacentPosition(const int x, const int y, int& newX, int& newY);
+
+    /**
      *  @brief Moves the creature
      *  @return bool move successful
      */

@@ -83,11 +83,9 @@ class Arena
      *  @brief Adds new creature
      *
      *  @param Creature new creature
-     *  @param int x position
-     *  @param int y position
      *  @return bool add successful
      */
-    bool addCreature(Creature *creature, const int x, const int y);
+    bool addCreature(Creature *creature);
 
     /**
      *  @brief Moves creature in a random direction

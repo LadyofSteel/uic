@@ -46,8 +46,11 @@ bool Arena::isValid(const int x, const int y) const
   }
 }
 
-bool Arena::addCreature(Creature *creature, const int x, const int y)
+bool Arena::addCreature(Creature *creature)
 {
+  int x = creature->getXPos();
+  int y = creature->getYPos();
+
   if ( !isValid(x, y) )
     return false;
 
