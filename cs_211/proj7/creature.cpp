@@ -85,11 +85,3 @@ bool Creature::move()
 
   return true;
 }
-
-void Creature::spawn()
-{
-}
-
-void Creature::live()
-{
-}

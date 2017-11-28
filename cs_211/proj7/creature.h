@@ -116,13 +116,14 @@ class Creature
 
     /**
      *  @brief Spawns a new creature
+     *  @return bool spawn successful
      */
-    void spawn();
+    virtual bool spawn() = 0;
 
     /**
      *  @brief Lives for one day
      */
-    virtual void live();
+    virtual void live() = 0;
 
   protected:
     Type type;        ///< Creature's type

@@ -13,7 +13,7 @@
 class DoodleBug : public Creature
 {
   public:
-    DoodleBug(Arena& arena) : Creature(arena)
+    DoodleBug(Arena* arena) : Creature(arena)
     {
       setType(Type::DOODLEBUG);
     }
