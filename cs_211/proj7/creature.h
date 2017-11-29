@@ -112,7 +112,7 @@ class Creature
      *  @brief Moves the creature
      *  @return bool move successful
      */
-    bool move();
+    virtual bool move();
 
     /**
      *  @brief Spawns a new creature
