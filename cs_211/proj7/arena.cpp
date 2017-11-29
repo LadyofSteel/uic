@@ -80,7 +80,20 @@ bool Arena::moveCreature(const int x, const int y, const int newX, const int new
   creatures[newX][newY] = creatures[x][y];
   creatures[x][y] = NULL;
 
-  grid->setChar(x, y, getCreatureSymbol( creatures[x][y]->getType() ));
+  grid->setChar(x, y, getCreatureSymbol(Creature::Type::NONE));
   grid->setChar(newX, newY, getCreatureSymbol( creatures[newX][newY]->getType() ));
+  return true;
+}
+
+bool Arena::killCreature(const int x, const int y)
+{
+  if (creatures[x][y] == NULL) {
+    return false;
+  }
+
+  delete creatures[x][y];
+  creatures[x][y] = NULL;
+
+  grid->setChar(x, y, getCreatureSymbol(Creature::Type::NONE));
   return true;
 }

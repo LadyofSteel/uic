@@ -108,6 +108,15 @@ class Arena
     bool moveCreature(const int x, const int y, const int newX, const int newY);
 
     /**
+     *  @brief Kills creature at given position
+     *
+     *  @param int x position
+     *  @param int y position
+     *  @return bool kill successful
+     */
+    bool killCreature(const int x, const int y);
+
+    /**
      *  @brief Elapses a day for creatures to spend
      */
     void elapseDay();
