@@ -47,10 +47,10 @@ class DoodleBug : public Creature
     void getAntPosition(const int x, const int y, int& newX, int& newY);
 
     /**
-     *  @brief Moves the doodlebug
-     *  @return bool move successful
+     *  @brief Hunts for an ant
+     *  @return bool hunt successful
      */
-    virtual bool move();
+    bool hunt();
 
     /**
      *  @brief Spawns a new doodlebug

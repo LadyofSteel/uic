@@ -11,6 +11,15 @@ void DoodleBug::getAntPosition(const int x, const int y, int& newX, int& newY)
 {
   Arena *arena = getArena();
 
+  if (arena->getCreatureType(x, y - 1) != Type::ANT &&
+      arena->getCreatureType(x, y + 1) != Type::ANT &&
+      arena->getCreatureType(x - 1, y) != Type::ANT &&
+      arena->getCreatureType(x + 1, y) != Type::ANT) {
+    newX = -1;
+    newY = -1;
+    return;
+  }
+
   do {
     int direction = rand() % 4;
 
@@ -37,14 +46,18 @@ void DoodleBug::getAntPosition(const int x, const int y, int& newX, int& newY)
   } while ( arena->getCreatureType(newX, newY) != Type::ANT );
 }
 
-bool DoodleBug::move()
+bool DoodleBug::hunt()
 {
   int newX = 0;
   int newY = 0;
 
-  getAdjacentPosition(getXPos(), getYPos(), newX, newY);
+  getAntPosition(getXPos(), getYPos(), newX, newY);
 
   if (newX == -1 && newY == -1) {
+    return false;
+  }
+
+  if ( !getArena()->killCreature(newX, newY) ) {
     return false;
   }
 
@@ -54,6 +67,7 @@ bool DoodleBug::move()
 
   setXPos(newX);
   setYPos(newY);
+  setLastAte(-1);
 
   return true;
 }
@@ -82,10 +96,22 @@ bool DoodleBug::spawn()
   newBug->setYPos(newY);
   newBug->setLastAte(0);
 
-  setLastSpawn(0);
+  setLastSpawn(-1);
   return true;
 }
 
 void DoodleBug::live()
 {
+
+  if ( !hunt() ) {
+    move();
+  }
+
+  if (getLastAte() >= 3) {
+    getArena()->killCreature( getXPos(), getYPos() );
+    return;
+  }
+
+  setLastAte( getLastAte() + 1 );
+  setLastSpawn( getLastSpawn() + 1 );
 }

@@ -32,7 +32,7 @@ class Creature
     /**
      *  @brief Destructor
      */
-    ~Creature();
+    virtual ~Creature() {}
 
     /**
      *  @brief Getter for type of creature
@@ -112,7 +112,7 @@ class Creature
      *  @brief Moves the creature
      *  @return bool move successful
      */
-    virtual bool move();
+    bool move();
 
     /**
      *  @brief Spawns a new creature
