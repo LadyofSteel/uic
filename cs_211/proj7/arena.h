@@ -60,6 +60,15 @@ class Arena
     void setGrid(GridDisplay *newGrid)  { grid = newGrid; }
 
     /**
+     *  @brief Returns the creature type in the given position
+     *
+     *  @param int x position
+     *  @param int y position
+     *  @return Creature::Type type of creature
+     */
+    Creature::Type getCreatureType(const int x, const int y) const;
+
+    /**
      *  @brief Returns symbol for a given creature type
      *
      *  @param Type creature type
@@ -98,9 +107,14 @@ class Arena
      */
     bool moveCreature(const int x, const int y, const int newX, const int newY);
 
+    /**
+     *  @brief Elapses a day for creatures to spend
+     */
+    void elapseDay();
+
   private:
-    Creature::Type **creatureLocations; ///< 2D array of creature types
-    int rows;                           ///< Number of rows for arena
-    int columns;                        ///< Number of columns for arena
-    GridDisplay *grid;                  ///< Object to display the grid
+    Creature* **creatures;  ///< 2D array of creatures
+    int rows;               ///< Number of rows for arena
+    int columns;            ///< Number of columns for arena
+    GridDisplay *grid;      ///< Object to display the grid
 };

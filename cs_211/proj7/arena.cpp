@@ -12,14 +12,23 @@ Arena::Arena(GridDisplay *grid)
   setRows(20);
   setColumns(20);
 
-  creatureLocations = new Creature::Type*[getRows()];
+  creatures = new Creature**[getRows()];
 
   for (int i = 0; i < getRows(); i++) {
-    creatureLocations[i] = new Creature::Type[getColumns()];
+    creatures[i] = new Creature*[getColumns()];
 
     for (int j = 0; j < getColumns(); j++) {
-      creatureLocations[i][j] = Creature::Type::NONE;
+      creatures[i][j] = NULL;
     }
+  }
+}
+
+Creature::Type Arena::getCreatureType(const int x, const int y) const
+{
+  if ( creatures[x][y] != NULL) {
+    return creatures[x][y]->getType();
+  } else {
+    return Creature::Type::NONE;
   }
 }
 
@@ -40,7 +49,7 @@ char Arena::getCreatureSymbol(const Creature::Type type) const
 bool Arena::isValid(const int x, const int y) const
 {
   if ((x >= 0 && x < getRows()) && (y >= 0 && y < getColumns())) {
-    return (creatureLocations[x][y] == Creature::Type::NONE);
+    return (creatures[x][y] == NULL);
   } else {
     return false;
   }
@@ -55,7 +64,7 @@ bool Arena::addCreature(Creature *creature)
     return false;
 
   Creature::Type type = creature->getType();
-  creatureLocations[x][y] = type;
+  creatures[x][y] = creature;
   grid->setChar(x, y, getCreatureSymbol(type));
   return true;
 }
@@ -68,10 +77,10 @@ bool Arena::moveCreature(const int x, const int y, const int newX, const int new
   if ( !isValid(newX, newY) )
     return false;
 
-  creatureLocations[newX][newY] = creatureLocations[x][y];
-  creatureLocations[x][y] = Creature::Type::NONE;
+  creatures[newX][newY] = creatures[x][y];
+  creatures[x][y] = NULL;
 
-  grid->setChar(x, y, getCreatureSymbol(creatureLocations[x][y]));
-  grid->setChar(newX, newY, getCreatureSymbol(creatureLocations[newX][newY]));
+  grid->setChar(x, y, getCreatureSymbol( creatures[x][y]->getType() ));
+  grid->setChar(newX, newY, getCreatureSymbol( creatures[newX][newY]->getType() ));
   return true;
 }
