@@ -6,17 +6,27 @@
 
 #pragma once
 
-#include <string>
-
 #include "creature.h"
 
 class Ant : public Creature
 {
   public:
-    Ant(Arena& arena) : Creature(arena)
+    /**
+     *  @brief Default constructor
+     */
+    Ant(Arena* arena) : Creature(arena)
     {
       setType(Type::ANT);
     }
 
-  private:
+    /**
+     *  @brief Spawns a new ant
+     *  @return bool spawn successful
+     */
+    virtual bool spawn();
+
+    /**
+     *  @brief Lives for one day
+     */
+    virtual void live();
 };

@@ -19,6 +19,7 @@ class DoodleBug : public Creature
     DoodleBug(Arena* arena) : Creature(arena)
     {
       setType(Type::DOODLEBUG);
+      setLastAte(0);
     }
 
     /**

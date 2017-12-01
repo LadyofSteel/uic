@@ -95,6 +95,7 @@ bool DoodleBug::spawn()
   newBug->setXPos(newX);
   newBug->setYPos(newY);
   newBug->setLastAte(0);
+  newBug->setDaySpent(true);
 
   setLastSpawn(-1);
   return true;
@@ -102,9 +103,12 @@ bool DoodleBug::spawn()
 
 void DoodleBug::live()
 {
-
   if ( !hunt() ) {
     move();
+  }
+
+  if (getLastSpawn() >= 8) {
+    spawn();
   }
 
   if (getLastAte() >= 3) {
@@ -112,6 +116,7 @@ void DoodleBug::live()
     return;
   }
 
+  setDaySpent(true);
   setLastAte( getLastAte() + 1 );
   setLastSpawn( getLastSpawn() + 1 );
 }

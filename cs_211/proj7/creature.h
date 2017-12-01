@@ -41,6 +41,12 @@ class Creature
     Creature::Type getType()        const { return type; }
 
     /**
+     *  @brief Checks if current day was spent
+     *  @return bool day was spent
+     */
+    bool isDaySpent()               const { return daySpent; }
+
+    /**
      *  @brief Getter for x position
      *  @return int current x position
      */
@@ -69,6 +75,12 @@ class Creature
      *  @param Type new creature type
      */
     void setType(const Creature::Type t)  { type = t; }
+
+    /**
+     *  @brief Setter for day spent
+     *  @param bool day was spent
+     */
+    void setDaySpent(const bool value)    { daySpent = value; }
 
     /**
      *  @brief Setter for x position
@@ -128,6 +140,7 @@ class Creature
   protected:
     Type type;        ///< Creature's type
     Arena *arena;     ///< Creature's environment
+    bool daySpent;    ///< Creature spent its day
     int xPos;         ///< Current x position
     int yPos;         ///< Current y position
     int lastSpawned;  ///< Last day creature spawned a new creature
