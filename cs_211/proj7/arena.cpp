@@ -18,14 +18,14 @@ Arena::Arena(GridDisplay *grid)
     creatures[i] = new Creature*[getColumns()];
 
     for (int j = 0; j < getColumns(); j++) {
-      creatures[i][j] = NULL;
+      creatures[i][j] = nullptr;
     }
   }
 }
 
 Creature::Type Arena::getCreatureType(const int x, const int y) const
 {
-  if ( creatures[x][y] != NULL) {
+  if ( creatures[x][y] != nullptr) {
     return creatures[x][y]->getType();
   } else {
     return Creature::Type::NONE;
@@ -49,7 +49,7 @@ char Arena::getCreatureSymbol(const Creature::Type type) const
 bool Arena::isValid(const int x, const int y) const
 {
   if ((x >= 0 && x < getRows()) && (y >= 0 && y < getColumns())) {
-    return (creatures[x][y] == NULL);
+    return (creatures[x][y] == nullptr);
   } else {
     return false;
   }
@@ -78,7 +78,7 @@ bool Arena::moveCreature(const int x, const int y, const int newX, const int new
     return false;
 
   creatures[newX][newY] = creatures[x][y];
-  creatures[x][y] = NULL;
+  creatures[x][y] = nullptr;
 
   grid->setChar(x, y, getCreatureSymbol(Creature::Type::NONE));
   grid->setChar(newX, newY, getCreatureSymbol( creatures[newX][newY]->getType() ));
@@ -87,13 +87,41 @@ bool Arena::moveCreature(const int x, const int y, const int newX, const int new
 
 bool Arena::killCreature(const int x, const int y)
 {
-  if (creatures[x][y] == NULL) {
+  if (creatures[x][y] == nullptr) {
     return false;
   }
 
   delete creatures[x][y];
-  creatures[x][y] = NULL;
+  creatures[x][y] = nullptr;
 
   grid->setChar(x, y, getCreatureSymbol(Creature::Type::NONE));
   return true;
+}
+
+void Arena::runDay(const Creature::Type type)
+{
+  for (int x = 0; x < getRows(); x++) {
+    for (int y = 0; y < getColumns(); y++) {
+      Creature *creature = creatures[x][y];
+
+      if (creature) {
+        if ( creature->getType() == type && !creature->isDaySpent() ) {
+          creature->live();
+        }
+      }
+    }
+  }
+}
+
+void Arena::endDay()
+{
+  for (int x = 0; x < getRows(); x++) {
+    for (int y = 0; y < getColumns(); y++) {
+      Creature *creature = creatures[x][y];
+
+      if (creature) {
+        creature->setDaySpent(false);
+      }
+    }
+  }
 }

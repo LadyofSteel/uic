@@ -117,9 +117,15 @@ class Arena
     bool killCreature(const int x, const int y);
 
     /**
-     *  @brief Elapses a day for creatures to spend
+     *  @brief Runs a day for creatures to spend
+     *  @param Creature::Type type of creature to use its turn
      */
-    void elapseDay();
+    void runDay(const Creature::Type type);
+
+    /**
+     *  @brief Ends the day for all creatures
+     */
+    void endDay();
 
   private:
     Creature* **creatures;  ///< 2D array of creatures
