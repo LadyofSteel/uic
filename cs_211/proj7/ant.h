@@ -14,9 +14,8 @@ class Ant : public Creature
     /**
      *  @brief Default constructor
      */
-    Ant(Arena* arena) : Creature(arena)
+    Ant(Arena* arena) : Creature(arena, Type::ANT)
     {
-      setType(Type::ANT);
     }
 
     /**

@@ -30,7 +30,7 @@ int main(int argc, char** argv)
     doodlebugs[i] = new DoodleBug(myArena);
   }
 
-  myGrid->showGrid ( );
+  myGrid->showGrid();
 
   while (day < 10) {
     day++;

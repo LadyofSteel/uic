@@ -16,11 +16,11 @@ Arena::Arena(GridDisplay *grid)
 
   creatures = new Creature**[getRows()];
 
-  for (int i = 0; i < getRows(); i++) {
-    creatures[i] = new Creature*[getColumns()];
+  for (int x = 0; x < getRows(); x++) {
+    creatures[x] = new Creature*[getColumns()];
 
-    for (int j = 0; j < getColumns(); j++) {
-      creatures[i][j] = nullptr;
+    for (int y = 0; y < getColumns(); y++) {
+      creatures[x][y] = nullptr;
     }
   }
 }
@@ -68,6 +68,7 @@ bool Arena::addCreature(Creature *creature)
   Creature::Type type = creature->getType();
   creatures[x][y] = creature;
   grid->setChar(x, y, getCreatureSymbol(type));
+
   return true;
 }
 

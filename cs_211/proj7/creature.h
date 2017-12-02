@@ -26,8 +26,10 @@ class Creature
 
     /**
      *  @brief Default constructor
+     *  @param Arena pointer to creature's arena
+     *  @param Type of creature
      */
-    Creature(Arena *arena);
+    Creature(Arena *arena, Type t);
 
     /**
      *  @brief Destructor

@@ -4,10 +4,12 @@
  *  @author Ammar Subei
  */
 
+#include <iostream>
+
 #include "arena.h"
 #include "creature.h"
 
-Creature::Creature(Arena *arena)
+Creature::Creature(Arena *arena, Type t)
 {
   setArena(arena);
 
@@ -21,6 +23,7 @@ Creature::Creature(Arena *arena)
 
   setXPos(x);
   setYPos(y);
+  setType(t);
   setDaySpent(false);
   setLastSpawn(0);
 

@@ -16,10 +16,8 @@ class DoodleBug : public Creature
     /**
      *  @brief Default constructor
      */
-    DoodleBug(Arena* arena) : Creature(arena)
+    DoodleBug(Arena* arena) : Creature(arena, Type::DOODLEBUG), lastAte(0)
     {
-      setType(Type::DOODLEBUG);
-      setLastAte(0);
     }
 
     /**
