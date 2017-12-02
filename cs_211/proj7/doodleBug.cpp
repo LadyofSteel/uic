@@ -11,6 +11,15 @@ void DoodleBug::getAntPosition(const int x, const int y, int& newX, int& newY)
 {
   Arena *arena = getArena();
 
+  if (!arena->isValid(x, y - 1) ||
+      !arena->isValid(x, y + 1) ||
+      !arena->isValid(x - 1, y) ||
+      !arena->isValid(x + 1, y) ) {
+    newX = -1;
+    newY = -1;
+    return;
+  }
+
   if (arena->getCreatureType(x, y - 1) != Type::ANT &&
       arena->getCreatureType(x, y + 1) != Type::ANT &&
       arena->getCreatureType(x - 1, y) != Type::ANT &&

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdio>
 // for usleep
 #include <unistd.h>

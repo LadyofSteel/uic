@@ -157,7 +157,7 @@ class Beetle
     }
 };
 
-int main ( int argc, char** argv)
+int poop ( int argc, char** argv)
 {
   srand(time(NULL));
 

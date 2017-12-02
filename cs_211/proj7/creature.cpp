@@ -21,6 +21,7 @@ Creature::Creature(Arena *arena)
 
   setXPos(x);
   setYPos(y);
+  setDaySpent(false);
   setLastSpawn(0);
 
   arena->addCreature(this);

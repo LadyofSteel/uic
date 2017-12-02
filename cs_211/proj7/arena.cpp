@@ -4,6 +4,8 @@
  *  @author Ammar Subei
  */
 
+#include <iostream>
+
 #include "arena.h"
 
 Arena::Arena(GridDisplay *grid)
@@ -25,7 +27,7 @@ Arena::Arena(GridDisplay *grid)
 
 Creature::Type Arena::getCreatureType(const int x, const int y) const
 {
-  if ( creatures[x][y] != nullptr) {
+  if (creatures[x][y]) {
     return creatures[x][y]->getType();
   } else {
     return Creature::Type::NONE;
