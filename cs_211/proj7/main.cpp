@@ -12,9 +12,13 @@ int main(int argc, char** argv)
 {
   srand( time(NULL) );
 
-  int day = 0;
-  int antCount = 0;
-  int doodleCount = 5;
+  // Uncomment these variables to have limited existence
+  // time for all creatures
+  //int day = 0;
+  //int existence = 20;
+
+  int antCount = 50;
+  int doodleCount = 10;
 
   GridDisplay *myGrid = new GridDisplay(20, 20);
   Arena *myArena = new Arena(myGrid);
@@ -32,8 +36,12 @@ int main(int argc, char** argv)
 
   myGrid->showGrid();
 
-  while (day < 10) {
-    day++;
+  // Use this while condition to limited program execution,
+  // and uncomment the increment of day
+  //while (day < existence) {
+
+  while (true) {
+    //day++;
 
     // DoodleBugs turn
     myArena->runDay(Creature::Type::DOODLEBUG);
@@ -44,7 +52,7 @@ int main(int argc, char** argv)
     // End of day cleanup
     myArena->endDay();
 
-    myGrid->mySleep(1000);
+    myGrid->mySleep(800);
     myGrid->showGrid();
   }
 }

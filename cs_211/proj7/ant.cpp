@@ -14,7 +14,7 @@ bool Ant::spawn()
   int newX = 0;
   int newY = 0;
 
-  if (lastSpawn < 8) {
+  if (lastSpawn < 3) {
     return false;
   }
 

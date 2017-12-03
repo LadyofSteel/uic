@@ -51,10 +51,15 @@ char Arena::getCreatureSymbol(const Creature::Type type) const
 bool Arena::isValid(const int x, const int y) const
 {
   if ((x >= 0 && x < getRows()) && (y >= 0 && y < getColumns())) {
-    return (creatures[x][y] == nullptr);
+    return true;
   } else {
     return false;
   }
+}
+
+bool Arena::isOccupied(const int x, const int y) const
+{
+  return (creatures[x][y] != nullptr);
 }
 
 bool Arena::addCreature(Creature *creature)
@@ -63,6 +68,9 @@ bool Arena::addCreature(Creature *creature)
   int y = creature->getYPos();
 
   if ( !isValid(x, y) )
+    return false;
+
+  if ( isOccupied(x, y) )
     return false;
 
   Creature::Type type = creature->getType();
@@ -74,17 +82,18 @@ bool Arena::addCreature(Creature *creature)
 
 bool Arena::moveCreature(const int x, const int y, const int newX, const int newY)
 {
-  if ( !isValid(x, y) )
-    return false;
-
   if ( !isValid(newX, newY) )
     return false;
 
+  if ( isOccupied(newX, newY) )
+    return false;
+
+  Creature::Type currentType = creatures[x][y]->getType();
   creatures[newX][newY] = creatures[x][y];
   creatures[x][y] = nullptr;
 
   grid->setChar(x, y, getCreatureSymbol(Creature::Type::NONE));
-  grid->setChar(newX, newY, getCreatureSymbol( creatures[newX][newY]->getType() ));
+  grid->setChar(newX, newY, getCreatureSymbol(currentType));
   return true;
 }
 

@@ -19,7 +19,7 @@ Creature::Creature(Arena *arena, Type t)
   do {
     x = rand() % arena->getRows();
     y = rand() % arena->getColumns();
-  } while ( !arena->isValid(x, y) );
+  } while ( !(arena->isValid(x, y) && !arena->isOccupied(x, y)) );
 
   setXPos(x);
   setYPos(y);
@@ -34,10 +34,42 @@ void Creature::getAdjacentPosition(const int x, const int y, int& newX, int& new
 {
   Arena *arena = getArena();
 
-  if (!arena->isValid(x, y - 1) &&
-      !arena->isValid(x, y + 1) &&
-      !arena->isValid(x - 1, y) &&
-      !arena->isValid(x + 1, y) ) {
+  int unavailableSpots = 0;
+
+  if ( arena->isValid(x, y - 1) ) {
+    if ( arena->isOccupied(x, y - 1) ) {
+      unavailableSpots++;
+    }
+  } else {
+    unavailableSpots++;
+  }
+
+  if ( arena->isValid(x, y + 1) ) {
+    if ( arena->isOccupied(x, y + 1) ) {
+      unavailableSpots++;
+    }
+  } else {
+    unavailableSpots++;
+  }
+
+  if ( arena->isValid(x - 1, y) ) {
+    if ( arena->isOccupied(x - 1, y) ) {
+      unavailableSpots++;
+    }
+  } else {
+    unavailableSpots++;
+  }
+
+  if ( arena->isValid(x + 1, y) ) {
+    if ( arena->isOccupied(x + 1, y) ) {
+      unavailableSpots++;
+    }
+  } else {
+    unavailableSpots++;
+  }
+
+  // No spots available around the creature
+  if (unavailableSpots >= 4) {
     newX = -1;
     newY = -1;
     return;
@@ -66,7 +98,7 @@ void Creature::getAdjacentPosition(const int x, const int y, int& newX, int& new
       default:
         break;
     }
-  } while ( !arena->isValid(newX, newY) );
+  } while ( !(arena->isValid(newX, newY) && !arena->isOccupied(newX, newY)) );
 }
 
 bool Creature::move()

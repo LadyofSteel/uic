@@ -79,14 +79,22 @@ class Arena
     /**
      *  @brief Checks if position is valid
      *
-     *  A position is valid if it's within the arena
-     *  boundaries and is not occupied by a creature.
+     *  A position is valid if it's within the arena boundaries.
      *
      *  @param int x position
      *  @param int y position
      *  @return bool position is valid
      */
     bool isValid(const int x, const int y) const;
+
+    /**
+     *  @brief Checks if position is occupied
+     *
+     *  @param int x position
+     *  @param int y position
+     *  @return bool position is occupied
+     */
+    bool isOccupied(const int x, const int y) const;
 
     /**
      *  @brief Adds new creature
