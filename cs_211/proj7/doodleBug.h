@@ -22,12 +22,14 @@ class DoodleBug : public Creature
 
     /**
      *  @brief Getter for last ate day
+     *
      *  @return int last ate day
      */
     int getLastAte()            const { return lastAte; }
 
     /**
      *  @brief Setter for last ate day
+     *
      *  @param int new last ate day
      */
     void setLastAte(const int value)  { lastAte = value; }
@@ -47,12 +49,14 @@ class DoodleBug : public Creature
 
     /**
      *  @brief Hunts for an ant
+     *
      *  @return bool hunt successful
      */
     bool hunt();
 
     /**
      *  @brief Spawns a new doodlebug
+     *
      *  @return bool spawn successful
      */
     virtual bool spawn();
