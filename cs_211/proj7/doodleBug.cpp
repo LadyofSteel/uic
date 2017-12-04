@@ -11,6 +11,7 @@ void DoodleBug::getAntPosition(const int x, const int y, int& newX, int& newY)
 {
   Arena *arena = getArena();
 
+  // Check if at least one spot is valid
   if (!arena->isValid(x, y - 1) ||
       !arena->isValid(x, y + 1) ||
       !arena->isValid(x - 1, y) ||
@@ -20,6 +21,7 @@ void DoodleBug::getAntPosition(const int x, const int y, int& newX, int& newY)
     return;
   }
 
+  // Check if at least one spot has an ant
   if (arena->getCreatureType(x, y - 1) != Type::ANT &&
       arena->getCreatureType(x, y + 1) != Type::ANT &&
       arena->getCreatureType(x - 1, y) != Type::ANT &&
@@ -29,6 +31,8 @@ void DoodleBug::getAntPosition(const int x, const int y, int& newX, int& newY)
     return;
   }
 
+  // At least one adjacent spot has an ant,
+  // so we choose a spot randomly to avoid patterns
   do {
     int direction = rand() % 4;
 
@@ -62,6 +66,7 @@ bool DoodleBug::hunt()
 
   getAntPosition(getXPos(), getYPos(), newX, newY);
 
+  // No ants available
   if (newX == -1 && newY == -1) {
     return false;
   }
@@ -94,6 +99,7 @@ bool DoodleBug::spawn()
 
   getAdjacentPosition(getXPos(), getYPos(), newX, newY);
 
+  // No adjacent spots available
   if (newX == -1 && newY == -1) {
     return false;
   }
@@ -101,9 +107,9 @@ bool DoodleBug::spawn()
   DoodleBug *newBug = new DoodleBug(arena);
   arena->moveCreature(newBug->getXPos(), newBug->getYPos(), newX, newY);
 
-  newBug->setXPos(newX);
-  newBug->setYPos(newY);
   newBug->setLastAte(0);
+
+  // Don't let the doodlebug take its turn for today
   newBug->setDaySpent(true);
 
   setLastSpawn(-1);

@@ -126,6 +126,7 @@ class Arena
 
     /**
      *  @brief Runs a day for creatures to spend
+     *
      *  @param Creature::Type type of creature to use its turn
      */
     void runDay(const Creature::Type type);

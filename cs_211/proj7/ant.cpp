@@ -20,15 +20,16 @@ bool Ant::spawn()
 
   getAdjacentPosition(getXPos(), getYPos(), newX, newY);
 
+  // No adjacent spots available
   if (newX == -1 && newY == -1) {
     return false;
   }
 
+  // Spawn a new Ant and move it to the new position immediately
   Ant *newAnt = new Ant(arena);
   arena->moveCreature(newAnt->getXPos(), newAnt->getYPos(), newX, newY);
 
-  newAnt->setXPos(newX);
-  newAnt->setYPos(newY);
+  // Don't let the child ant take its turn for today
   newAnt->setDaySpent(true);
 
   setLastSpawn(-1);

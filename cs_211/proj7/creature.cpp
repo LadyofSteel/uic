@@ -36,6 +36,7 @@ void Creature::getAdjacentPosition(const int x, const int y, int& newX, int& new
 
   int unavailableSpots = 0;
 
+  // Must check if any adjacent spot is both valid and not occupied
   if ( arena->isValid(x, y - 1) ) {
     if ( arena->isOccupied(x, y - 1) ) {
       unavailableSpots++;
@@ -68,13 +69,15 @@ void Creature::getAdjacentPosition(const int x, const int y, int& newX, int& new
     unavailableSpots++;
   }
 
-  // No spots available around the creature
+  // No adjacent spots are both valid and unoccupied
   if (unavailableSpots >= 4) {
     newX = -1;
     newY = -1;
     return;
   }
 
+  // At least one adjacent spot is available,
+  // so we choose a spot randomly to avoid patterns
   do {
     int direction = rand() % 4;
 
@@ -108,6 +111,7 @@ bool Creature::move()
 
   getAdjacentPosition(getXPos(), getYPos(), newX, newY);
 
+  // No adjacent spots available
   if (newX == -1 && newY == -1) {
     return false;
   }
@@ -118,6 +122,5 @@ bool Creature::move()
 
   setXPos(newX);
   setYPos(newY);
-
   return true;
 }

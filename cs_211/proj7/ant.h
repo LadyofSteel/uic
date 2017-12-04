@@ -20,6 +20,7 @@ class Ant : public Creature
 
     /**
      *  @brief Spawns a new ant
+     *
      *  @return bool spawn successful
      */
     virtual bool spawn();
