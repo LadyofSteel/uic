@@ -2,6 +2,12 @@
 
 Due date: Thursday, Oct. 26th
 
+Authors:
+
+* Ammar Subei
+* Daniel Kloza
+* Margi Ghandi
+
 ### Usage
 A makefile is provided for easier compilation. Enter `make` or `make build` to build the project. Enter `make run` to run the program. If you want to build and run, just enter `make all`.
 Recompilation should work just fine with `make`, since the source files are set as dependencies for the build process.
