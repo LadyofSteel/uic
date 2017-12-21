@@ -1,7 +1,5 @@
 # CS 211 Project 2
 
-Due date: Monday, Sept. 25th
-
 ### Info
 Using **C**, this project is a balanced symbol checker; it should determine whether input from user is given with properly balanced symbols. The symbols are "() {} [] <>". The project requires the use of a stack implemented as a dynamic array. For any unbalanced expressions, the program is required to report the missing symbol that causes the unbalance.
 

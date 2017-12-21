@@ -1,7 +1,5 @@
 # CS 211 Project 5
 
-Due date: Monday, Nov. 6th
-
 ### Info
 Using **C++**, this project should evaluate an infix expression. The algorithm **required** for this program will use two stacks, an operator stack and a value stack. Both stacks must be implemented using a dynamic array class. The infix expression will only use the operators of addition, subtraction, multiplication, division, and parentheses.
 

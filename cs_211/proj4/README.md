@@ -1,7 +1,5 @@
 # CS 211 Project 4
 
-Due date: Monday, Oct. 23rd
-
 ### Info
 Using **C**, this project should implement a customer waiting list that might be used by a restaurant. When people want to be seated in the restaurant, they give their name and group size and then wait until those in front of them have been seated. A group can call ahead to get its name on the waiting list before arriving to the restaurant. The program must use a linked list to implement a queue-like data structure. 
 

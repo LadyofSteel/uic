@@ -1,12 +1,17 @@
 # CS 342 Project 3
 
-Due date: Thursday, Oct. 26th
+### Info
+Using **Java Swing**, this project should implement [Sudoku](https://en.wikipedia.org/wiki/Sudoku). The input for the program is a text file that will have 3 values per line:
 
-Authors:
+- a row position (listed first)
+- a column position (listed second)
+- a value (listed last)
 
-* Ammar Subei
-* Daniel Kloza
-* Margi Ghandi
+This is a group project of 2 or 3 students. The group members for this program are:
+
+- Ammar Subei
+- Daniel Kloza
+- Margi Ghandi
 
 ### Usage
 A makefile is provided for easier compilation. Enter `make` or `make build` to build the project. Enter `make run` to run the program. If you want to build and run, just enter `make all`.

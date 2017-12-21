@@ -1,7 +1,5 @@
 # CS 211 Project 3
 
-Due date: Tuesday, Oct. 10th
-
 ### Info
 Using **C**, this project should find its way through a maze using a depth-first search algorithm. The program takes input from a file where the filename is specified in the command line arguments. The input file will only contain two integer values per line of input:
 

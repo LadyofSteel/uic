@@ -1,6 +1,7 @@
 # CS 342 Project 1
 
-Due date: Wed, Sept. 13th
+### Info
+Using **Java**, this project should implement the card game of Five Card Draw in Poker. The wikipedia page [Five Card Draw](https://en.wikipedia.org/wiki/Five-card_draw) explains the order in which cards are given to the players and Poker determines the "value" of each hand.
 
 ### Usage
 A makefile is provided for easier compilation. Enter `make` or `make build` to build the project. Enter `make run` to run the program. If you want to build and run, just enter `make all`.

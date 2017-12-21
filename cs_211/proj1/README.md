@@ -1,7 +1,5 @@
 # CS 211 Project 1
 
-Due date: Monday, Sept. 11th
-
 ### Info
 Using **C**, this project is about demonstrating the differences between simple searching algorithms for arrays of integers. The user first inputs an array of integers, the array is then duplicated and sorted, and finally the user inputs an integer to search for. The program should search for the user-specified integer using linear search (on unsorted array) and binary search (on sorted array). Results of both search algorithms are displayed to the user.
 

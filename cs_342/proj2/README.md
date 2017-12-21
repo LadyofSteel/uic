@@ -1,6 +1,7 @@
 # CS 342 Project 2
 
-Due date: Wed, Oct. 4th
+### Info
+Using **Java Swing**, this project should implement the [Fifteen Puzzle](http://www.archimedes-lab.org/game_slide15/slide15_puzzle.html) game.
 
 ### Usage
 A makefile is provided for easier compilation. Enter `make` or `make build` to build the project. Enter `make run` to run the program. If you want to build and run, just enter `make all`.

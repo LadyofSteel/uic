@@ -1,7 +1,5 @@
 # CS 211 Project 7
 
-Due date: Monday, Dec. 4th
-
 ### Info
 Using **C++**, this project should simulate the population growth algorithm between two groups of insects: doodlebugs and ants. Basically, it's the Game of Life. This project will use the C++ GridDisplay class to display each generation of insects.
 
