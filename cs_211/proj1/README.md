@@ -2,6 +2,9 @@
 
 Due date: Monday, Sept. 11th
 
+### Info
+Using **C**, this project is about demonstrating the differences between simple searching algorithms for arrays of integers. The user first inputs an array of integers, the array is then duplicated and sorted, and finally the user inputs an integer to search for. The program should search for the user-specified integer using linear search (on unsorted array) and binary search (on sorted array). Results of both search algorithms are displayed to the user.
+
 ### Usage
 A makefile is provided for easier compilation. Enter `make` or `make proj1` to build the project. Enter `make run` to run the executable. If you want to build and run, just enter `make all`.
 Recompilation should work just fine with `make`, since the source files are set as dependencies for the build process.

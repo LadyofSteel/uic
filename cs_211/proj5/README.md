@@ -2,6 +2,9 @@
 
 Due date: Monday, Nov. 6th
 
+### Info
+Using **C++**, this project should evaluate an infix expression. The algorithm **required** for this program will use two stacks, an operator stack and a value stack. Both stacks must be implemented using a dynamic array class. The infix expression will only use the operators of addition, subtraction, multiplication, division, and parentheses.
+
 ### Usage
 A makefile is provided for easier compilation. Enter `make` or `make proj5` to build the project. Enter `make run` to run the executable. If you want to build and run, just enter `make all`. If you want to build and run in debug mode, enter `make debug`.
 Recompilation should work just fine with `make`; the source and header files are set as dependencies for the build process.
