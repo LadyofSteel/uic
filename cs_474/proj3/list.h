@@ -12,16 +12,68 @@ template<typename T>
 class List
 {
   public:
-    List();
-    List(const int size);
-    ~List();
-    bool isEmpty();
-    T at(const int index);
-    void add(T newItem);
-    void remove(const int index);
-    void removeAll();
+    List() : head(nullptr), tail(nullptr), size(0) {}
+
+    List(const int inputSize) : head(nullptr), tail(nullptr), size(inputSize)
+    {
+      for (int i = 0; i < inputSize; i++) {
+        this->add( T() );
+      }
+    }
+
+    ~List() {}
+
+    int getSize() const
+    {
+      return size;
+    }
+
+    void setSize(const int newSize)
+    {
+      size = newSize;
+    }
+
+    bool isEmpty() const
+    {
+      return (head == nullptr) && (tail == nullptr);
+    }
+
+    T at(const int index) const
+    {
+      //if (index > getSize()) {
+        //return NULL;
+      //}
+
+      ListNode<T> *current = head;
+      for (int i = 0; i < index; i++) {
+        current = current->getNext();
+      }
+
+      return current->getData();
+    }
+
+    void add(T newItem)
+    {
+      ListNode<T> *newNode = new ListNode<T>(newItem);
+
+      if (tail == nullptr) {
+        head = newNode;
+        tail = newNode;
+      } else {
+        tail->setNext(newNode);
+        newNode->setPrevious(tail);
+        tail = newNode;
+      }
+
+      setSize( getSize() + 1);
+    }
+
+    void remove(const int index) {}
+
+    void removeAll() {}
 
   private:
-    ListNode<T> *head; ///< Pointer to the head of the list
-    ListNode<T> *tail; ///< Pointer to the tail of the list
+    ListNode<T> *head;  ///< Pointer to the head of the list
+    ListNode<T> *tail;  ///< Pointer to the tail of the list
+    int size;           ///< Current size of the list
 };

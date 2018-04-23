@@ -23,16 +23,9 @@ class Appliance
     };
 
     /**
-     *  @brief Default constructor
-     *
-     *  @param Type of appliance
-     */
-    Appliance(Type t);
-
-    /**
      *  @brief Destructor
      */
-    virtual ~Appliance() {}
+    ~Appliance() {}
 
     /**
      *  @brief Getter for type of appliance
