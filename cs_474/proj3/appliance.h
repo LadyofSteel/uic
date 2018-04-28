@@ -17,15 +17,10 @@ class Appliance
      */
     enum class Type
     {
-      LAUNDRY_MACHINE,  ///< Not a appliance
-      DISH_WASHER,      ///< Ant
-      DRYER             ///< DoodleBug
+      LAUNDRY_MACHINE,  ///< Laundry machine
+      DISH_WASHER,      ///< Dish washer
+      DRYER             ///< Dryer
     };
-
-    /**
-     *  @brief Destructor
-     */
-    ~Appliance() {}
 
     /**
      *  @brief Getter for type of appliance
@@ -89,6 +84,13 @@ class Appliance
      *  @param string new manufacturer name
      */
     void setManufacturer(const std::string newMan)  { manufacturer = newMan; }
+
+    /**
+     *  @brief Setter for appliance images
+     *
+     *  @param vector<string> images
+     */
+    void setImages(std::vector<std::string> pics)        { images = pics; }
 
   protected:
     Type type;                        ///< Appliance's type

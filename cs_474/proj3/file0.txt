@@ -1,0 +1,5 @@
+0
+2
+LG
+300
+some/file/path,another/path

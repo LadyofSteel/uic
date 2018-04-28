@@ -21,7 +21,16 @@ class List
       }
     }
 
-    ~List() {}
+    ~List()
+    {
+      ListNode<T> *current = this->head;
+
+      while (current != nullptr) {
+        ListNode<T> *temp = current;
+        current = current->getPrevious();
+        delete temp;
+      }
+    }
 
     int getSize() const
     {
@@ -38,12 +47,8 @@ class List
       return (head == nullptr) && (tail == nullptr);
     }
 
-    T at(const int index) const
+    T at(const int index)
     {
-      //if (index > getSize()) {
-        //return NULL;
-      //}
-
       ListNode<T> *current = head;
       for (int i = 0; i < index; i++) {
         current = current->getNext();
@@ -56,7 +61,7 @@ class List
     {
       ListNode<T> *newNode = new ListNode<T>(newItem);
 
-      if (tail == nullptr) {
+      if ( isEmpty() ) {
         head = newNode;
         tail = newNode;
       } else {

@@ -31,12 +31,12 @@ class ListNode
     /**
      *  @brief Getter for next node
     */
-    ListNode* getNext()         const { return next; }
+    ListNode<T>* getNext()         const { return next; }
 
     /**
      *  @brief Getter for previous node
     */
-    ListNode* getPrevious()     const { return previous; }
+    ListNode<T>* getPrevious()     const { return previous; }
 
     /**
      *  @brief Setter for next node
