@@ -1,3 +1,9 @@
+/**
+ *  @brief Main program file
+ *
+ *  @author Ammar Subei
+*/
+
 #include <iostream>
 
 #include "ali.h"
@@ -6,6 +12,7 @@
 
 int main()
 {
+  // Create UI
   Interface *ui = new Interface();
 
   std::cout << std::endl;
@@ -13,6 +20,7 @@ int main()
   std::cout << "Developed by Ammar Subei" << std::endl;
   std::cout << std::endl;
 
+  // Use UI
   ui->runCommands();
 
   std::cout << std::endl;
