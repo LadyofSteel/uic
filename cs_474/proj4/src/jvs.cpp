@@ -12,6 +12,7 @@ void JVS::execute(ALI &receiver)
   if (receiver.isOverflow()) {
     receiver.setPC( std::stoi(getArgument()) );
   } else {
+    // Increment program counter
     receiver.setPC( receiver.getPC() + 1 );
   }
 }

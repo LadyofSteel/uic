@@ -11,5 +11,6 @@ void LDI::execute(ALI &receiver)
 {
   receiver.setRegA( std::stoi(getArgument()) );
 
+  // Increment program counter
   receiver.setPC( receiver.getPC() + 1 );
 }

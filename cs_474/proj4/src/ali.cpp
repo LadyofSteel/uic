@@ -11,7 +11,8 @@
 
 Instruction* ALI::getMemData(const int address) const
 {
-  if (address < memory.size()) {
+  // Must check for valid address
+  if (address < int(memory.size())) {
     return memory.at(address);
   } else {
     return nullptr;
@@ -25,12 +26,18 @@ int ALI::getSymbolAddress(const std::string symbol) const
 
 void ALI::addMemData(std::string data)
 {
+  // If memory exceeds 256 words, do not add anything!
+  if (memory.size() >= 256) {
+    return;
+  }
+
   // Use stringstream to tokenize instruction line
   std::stringstream ss(data);
 
   std::string command;
   std::string arg;
 
+  // Command delimited by space, argument delimited by newline
   std::getline(ss, command, ' ');
   std::getline(ss, arg);
 
@@ -64,11 +71,13 @@ void ALI::addMemData(std::string data)
 
 void ALI::addSymbol(const std::string data, const int address)
 {
+  // Inserts a <key,value> pair to symbol table
   symTable.insert( std::make_pair(data, address) );
 }
 
 void ALI::reset()
 {
+  // Reset all registers and bits
   setPC(0);
   setRegA(0);
   setRegB(0);
@@ -76,6 +85,7 @@ void ALI::reset()
   setZero(false);
   setOverflow(false);
 
+  // Clear memory and symbol table
   memory.clear();
   symTable.clear();
 }

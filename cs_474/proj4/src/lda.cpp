@@ -14,5 +14,6 @@ void LDA::execute(ALI &receiver)
 
   receiver.setRegA(data);
 
+  // Increment program counter
   receiver.setPC( receiver.getPC() + 1 );
 }

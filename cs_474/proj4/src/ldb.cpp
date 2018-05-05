@@ -14,5 +14,6 @@ void LDB::execute(ALI &receiver)
 
   receiver.setRegB(data);
 
+  // Increment program counter
   receiver.setPC( receiver.getPC() + 1 );
 }

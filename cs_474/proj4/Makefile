@@ -21,6 +21,6 @@ all: clean $(TARGET) run
 
 clean:
 	@echo "Cleaning..."
-	$(RM) $(TARGET)
+	$(RM) $(TARGET) output.txt
 
 .PHONY: clean

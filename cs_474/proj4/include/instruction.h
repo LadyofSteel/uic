@@ -6,17 +6,16 @@
 
 #pragma once
 
-#include <iostream>
 #include <string>
 
+// Forward declaration of class ALI
 class ALI;
 
 class Instruction
 {
   public:
     /**
-     *  @brief Default constructor
-     *  @param string argument
+     *  @brief Enum for type of instruction
     */
     enum class Type
     {
@@ -40,15 +39,6 @@ class Instruction
      *  @param string argument
     */
     Instruction(Type t, std::string arg = "") : type(t), argument(arg) {}
-
-    /**
-     *  @brief Secondary constructor
-     *  @param string instruction line
-     *
-     *  Creates Instruction object from instruction string.
-     *  Implemented by derived classes.
-    */
-    Instruction(std::string);
 
     /**
      *  @brief Getter for instruction type
@@ -75,10 +65,8 @@ class Instruction
     void setArgument(const std::string arg) { argument = arg; }
 
     /**
-     *  @brief Overloads outstream operator
-     *  @param ostream& output stream
-     *  @param Instruction& instruction object
-     *  @return ostream& output stream
+     *  @brief Converts Instruction to string format
+     *  @return string instruction in string format
     */
     std::string toString() const
     {
@@ -107,6 +95,8 @@ class Instruction
     /**
      *  @brief Execute instruction
      *  @param ALI interpreter object
+     *
+     *  Must be implemented by derived classes.
     */
     virtual void execute(ALI &reciever) = 0;
 

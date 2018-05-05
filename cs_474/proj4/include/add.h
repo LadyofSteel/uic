@@ -11,16 +11,14 @@
 class ADD : public Instruction
 {
   public:
+    /**
+     *  @brief Default constructor
+    */
     ADD() : Instruction(Type::ADD) {}
 
     /**
-     *  @brief Secondary constructor
-     *  @param string instruction line
-     *
-     *  Creates Instruction object from instruction string.
+     *  @brief Implements instruction execution
+     *  @param ALI instance
     */
-    // TODO
-    //ADD(std::string line) : Instruction(Type::ADD) {}
-
     void execute(ALI &receiver) override;
 };

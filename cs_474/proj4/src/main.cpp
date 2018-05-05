@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "ali.h"
 #include "interface.h"
 #include "commandIncludes.h"

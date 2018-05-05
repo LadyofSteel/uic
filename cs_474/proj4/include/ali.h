@@ -9,6 +9,7 @@
 #include <vector>
 #include <unordered_map>
 
+// Forward declaration of class Instruction
 class Instruction;
 
 class ALI
@@ -18,12 +19,6 @@ class ALI
      *  @brief Default constructor
      */
     ALI() : regA(0), regB(0), pc(0), zero(false), overflow(false) {}
-
-    /**
-     *  @brief Destructor
-     */
-    // TODO
-    //~ALI();
 
     /**
      *  @brief Getter for Register A

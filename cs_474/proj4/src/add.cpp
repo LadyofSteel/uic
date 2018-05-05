@@ -13,9 +13,10 @@ void ADD::execute(ALI &receiver)
   const int b = receiver.getRegB();
   int sum = a + b;
 
-  // Set zero and overflow bits as needed
+  // Set zero bit as needed
   receiver.setZero( sum == 0 );
 
+  // Set overflow bit as needed
   if (sum > 536870911) {
     sum -= 536870911;
     receiver.setOverflow(true);
@@ -28,5 +29,6 @@ void ADD::execute(ALI &receiver)
 
   receiver.setRegA(sum);
 
+  // Increment program counter
   receiver.setPC( receiver.getPC() + 1 );
 }

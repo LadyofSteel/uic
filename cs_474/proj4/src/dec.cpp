@@ -11,5 +11,6 @@ void DEC::execute(ALI &receiver)
 {
   receiver.addSymbol(getArgument(), receiver.getPC());
 
+  // Increment program counter
   receiver.setPC( receiver.getPC() + 1 );
 }

@@ -6,6 +6,7 @@
 
 #pragma once
 
+// Forward declaration of class ALI
 class ALI;
 
 class Interface
@@ -66,5 +67,5 @@ class Interface
     void printBits();
 
   private:
-    ALI *ali; ///< ALI instance
+    ALI *ali; ///< ALI instance pointer
 };
