@@ -3,8 +3,8 @@ TARGET 	:= proj4
 
 SRCEXT 	:= cpp
 HDREXT 	:= h
-SRCDIR 	:= src
-HDRDIR 	:= include
+SRCDIR 	:= ./src
+HDRDIR 	:= ./include
 
 SOURCES := $(shell find $(SRCDIR) -type f -name "*.$(SRCEXT)")
 HEADERS := $(shell find $(HDRDIR) -type f -name "*.$(HDREXT)")

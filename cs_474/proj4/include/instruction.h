@@ -9,7 +9,7 @@
 #include <iostream>
 #include <string>
 
-#include "ali.h"
+class ALI;
 
 class Instruction
 {
@@ -20,6 +20,7 @@ class Instruction
     */
     enum class Type
     {
+      NONE, ///< Not a command
       DEC,  ///< Declare command
       LDA,  ///< Load A command
       LDB,  ///< Load B command
@@ -35,21 +36,43 @@ class Instruction
 
     /**
      *  @brief Default constructor
+     *  @param Type instruction type
      *  @param string argument
     */
     Instruction(Type t, std::string arg = "") : type(t), argument(arg) {}
 
     /**
+     *  @brief Secondary constructor
+     *  @param string instruction line
+     *
+     *  Creates Instruction object from instruction string.
+     *  Implemented by derived classes.
+    */
+    Instruction(std::string);
+
+    /**
      *  @brief Getter for instruction type
      *  @return Type type
     */
-    Type getType()            const { return type; }
+    Type getType()                    const { return type; }
 
     /**
      *  @brief Getter for instruction argument
      *  @return string argument
     */
-    std::string getArgument() const { return argument; }
+    std::string getArgument()         const { return argument; }
+
+    /**
+     *  @brief Setter for instruction type
+     *  @param Type type
+    */
+    void setType(const Type t)              { type = t; }
+
+    /**
+     *  @brief Setter for instruction argument
+     *  @param string argument
+    */
+    void setArgument(const std::string arg) { argument = arg; }
 
     /**
      *  @brief Overloads outstream operator
@@ -57,28 +80,28 @@ class Instruction
      *  @param Instruction& instruction object
      *  @return ostream& output stream
     */
-    friend std::ostream& operator<<(std::ostream &os, const Instruction &instr)
+    std::string toString() const
     {
       std::string command = "";
 
       // Convert Type enum to its string representation
-      switch (instr.getType()) {
-        case Type::DEC: command = "DEC"; break;
-        case Type::LDA: command = "LDA"; break;
-        case Type::LDB: command = "LDB"; break;
-        case Type::LDI: command = "LDI"; break;
-        case Type::ST: command = "ST"; break;
-        case Type::XCH: command = "XCH"; break;
-        case Type::JMP: command = "JMP"; break;
-        case Type::JVS: command = "JVS"; break;
-        case Type::JZS: command = "JZS"; break;
-        case Type::ADD: command = "ADD"; break;
-        case Type::HLT: command = "HLT"; break;
+      switch (getType()) {
+        case Type::NONE: return getArgument();
+        case Type::DEC: command = "DEC";  break;
+        case Type::LDA: command = "LDA";  break;
+        case Type::LDB: command = "LDB";  break;
+        case Type::LDI: command = "LDI";  break;
+        case Type::ST:  command = "ST";   break;
+        case Type::XCH: command = "XCH";  break;
+        case Type::JMP: command = "JMP";  break;
+        case Type::JVS: command = "JVS";  break;
+        case Type::JZS: command = "JZS";  break;
+        case Type::ADD: command = "ADD";  break;
+        case Type::HLT: command = "HLT";  break;
         default: break;
       }
 
-      os << command << " " << instr.getArgument() << std::endl;
-      return os;
+      return (command + " " + getArgument());
     }
 
     /**

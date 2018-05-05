@@ -8,4 +8,5 @@
 
 void HLT::execute(ALI &receiver)
 {
+  receiver.setHalt(true);
 }

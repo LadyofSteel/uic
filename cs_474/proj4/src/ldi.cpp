@@ -4,8 +4,10 @@
  *  @author Ammar Subei
 */
 
+#include "ali.h"
 #include "ldi.h"
 
 void LDI::execute(ALI &receiver)
 {
+  receiver.setRegA( std::stoi(getArgument()) );
 }
