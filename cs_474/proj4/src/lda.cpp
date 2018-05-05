@@ -13,4 +13,6 @@ void LDA::execute(ALI &receiver)
   const int data = std::stoi( receiver.getMemData(address)->getArgument() );
 
   receiver.setRegA(data);
+
+  receiver.setPC( receiver.getPC() + 1 );
 }

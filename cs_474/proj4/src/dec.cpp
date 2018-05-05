@@ -10,4 +10,6 @@
 void DEC::execute(ALI &receiver)
 {
   receiver.addSymbol(getArgument(), receiver.getPC());
+
+  receiver.setPC( receiver.getPC() + 1 );
 }

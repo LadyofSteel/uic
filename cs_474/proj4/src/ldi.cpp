@@ -10,4 +10,6 @@
 void LDI::execute(ALI &receiver)
 {
   receiver.setRegA( std::stoi(getArgument()) );
+
+  receiver.setPC( receiver.getPC() + 1 );
 }

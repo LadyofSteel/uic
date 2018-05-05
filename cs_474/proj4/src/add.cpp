@@ -27,4 +27,6 @@ void ADD::execute(ALI &receiver)
   }
 
   receiver.setRegA(sum);
+
+  receiver.setPC( receiver.getPC() + 1 );
 }

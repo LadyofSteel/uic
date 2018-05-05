@@ -4,6 +4,7 @@
  *  @author Ammar Subei
 */
 
+#include "ali.h"
 #include "hlt.h"
 
 void HLT::execute(ALI &receiver)

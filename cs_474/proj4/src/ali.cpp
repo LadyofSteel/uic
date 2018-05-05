@@ -66,3 +66,16 @@ void ALI::addSymbol(const std::string data, const int address)
 {
   symTable.insert( std::make_pair(data, address) );
 }
+
+void ALI::reset()
+{
+  setPC(0);
+  setRegA(0);
+  setRegB(0);
+  setHalt(false);
+  setZero(false);
+  setOverflow(false);
+
+  memory.clear();
+  symTable.clear();
+}

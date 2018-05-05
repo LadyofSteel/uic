@@ -14,4 +14,6 @@ void ST::execute(ALI &receiver)
   
   ( receiver.getMemData(address) )->setType(Instruction::Type::NONE);
   ( receiver.getMemData(address) )->setArgument(arg);
+
+  receiver.setPC( receiver.getPC() + 1 );
 }

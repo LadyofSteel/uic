@@ -13,4 +13,6 @@ void XCH::execute(ALI &receiver)
   
   receiver.setRegB( receiver.getRegA() );
   receiver.setRegA(temp);
+
+  receiver.setPC( receiver.getPC() + 1 );
 }
